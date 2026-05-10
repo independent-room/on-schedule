@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Calendar, Sparkles, ShieldCheck } from 'lucide-react';
 import { Button } from '@on-schedule/ui/components/ui/button';
-import { supabaseAdmin } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase';
+import { SectionHeading } from './SectionHeading';
 
 const TARGET = 100;
 
@@ -10,7 +11,7 @@ async function getWaitlistCount(): Promise<number> {
   // build-time static rendering 방지 → 매 요청 fresh count
   noStore();
   try {
-    const { count, error } = await supabaseAdmin
+    const { count, error } = await getSupabaseAdmin()
       .from('waitlist')
       .select('*', { count: 'exact', head: true });
     if (error) throw error;
@@ -47,19 +48,17 @@ export async function EarlyBird() {
   return (
     <section className="border-y border-neutral-200 bg-white py-20 md:py-28">
       <div className="mx-auto max-w-[920px] px-6">
-        <div className="mb-12 text-center">
-          <span className="mb-4 inline-block rounded-full bg-brand-500 px-3 py-1 text-[12px] font-bold tracking-wider text-white">
-            얼리버드 한정
-          </span>
-          <h2
-            className="mb-3 text-h2 text-foreground md:text-[36px] font-display font-extrabold"
-          >
-            선착순 <span className="text-brand-500">{TARGET}명</span>에게만 드리는 혜택
-          </h2>
-          <p className="text-body-l text-neutral-700">
-            사전 신청자에게 평생 가는 세 가지 약속
-          </p>
-        </div>
+        <SectionHeading
+          className="mb-12"
+          eyebrow="얼리버드 한정"
+          eyebrowVariant="solid"
+          title={
+            <>
+              선착순 <span className="text-brand-500">{TARGET}명</span>에게만 드리는 혜택
+            </>
+          }
+          subtitle="사전 신청자에게 평생 가는 세 가지 약속"
+        />
 
         <div className="mb-10 grid gap-4 md:grid-cols-3">
           {BENEFITS.map(({ icon: Icon, title, desc }) => (

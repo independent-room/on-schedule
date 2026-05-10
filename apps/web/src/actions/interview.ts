@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { supabaseAdmin } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase';
 
 export type InterviewResult =
   | { ok: true }
@@ -20,7 +20,7 @@ export async function requestInterview(input: { email: string }): Promise<Interv
     return { ok: false, code: 'validation', error: '이메일 형식이 올바르지 않습니다' };
   }
 
-  const { data, error: dbError } = await supabaseAdmin
+  const { data, error: dbError } = await getSupabaseAdmin()
     .from('waitlist')
     .update({ interview_consent: true })
     .eq('email', parsed.data.email)

@@ -2,8 +2,8 @@
 
 import { headers } from 'next/headers';
 import { createHash } from 'node:crypto';
-import { supabaseAdmin } from '@/lib/supabase';
-import { resend, RESEND_FROM, RESEND_REPLY_TO } from '@/lib/resend';
+import { getSupabaseAdmin } from '@/lib/supabase';
+import { getResendClient, RESEND_FROM, RESEND_REPLY_TO } from '@/lib/resend';
 import { waitlistInputSchema, type WaitlistInput } from '@/lib/schemas/waitlist';
 
 export type WaitlistResult =
@@ -32,7 +32,7 @@ export async function submitWaitlist(input: WaitlistInput): Promise<WaitlistResu
     'unknown';
   const ipHash = createHash('sha256').update(rawIp).digest('hex').slice(0, 16);
 
-  const { error: dbError } = await supabaseAdmin.from('waitlist').insert({
+  const { error: dbError } = await getSupabaseAdmin().from('waitlist').insert({
     email: data.email,
     industry: data.industry,
     phone: data.phone ?? null,
@@ -62,7 +62,7 @@ export async function submitWaitlist(input: WaitlistInput): Promise<WaitlistResu
   // 자동 응답 메일 — 실패해도 신청 자체는 성공으로 처리 (메일은 부수효과).
   // Resend SDK는 throw하지 않고 { data, error } 반환하므로 error 필드를 명시적으로 체크.
   try {
-    const { data: sent, error: mailError } = await resend.emails.send({
+    const { data: sent, error: mailError } = await getResendClient().emails.send({
       from: RESEND_FROM,
       replyTo: RESEND_REPLY_TO,
       to: data.email,

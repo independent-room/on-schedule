@@ -1,4 +1,5 @@
 import { Calendar } from 'lucide-react';
+import { SectionHeading } from './SectionHeading';
 
 type Milestone = {
   when: string;
@@ -32,19 +33,12 @@ export function Roadmap() {
   return (
     <section className="bg-cream-50/40 py-20 md:py-28">
       <div className="mx-auto max-w-[920px] px-6">
-        <div className="mb-12 text-center">
-          <span className="mb-4 inline-block rounded-full bg-accent px-3 py-1 text-[12px] font-bold text-accent-foreground">
-            출시 일정
-          </span>
-          <h2
-            className="mb-3 text-h2 text-foreground md:text-[36px] font-display font-extrabold"
-          >
-            언제 쓰실 수 있나요?
-          </h2>
-          <p className="text-body-l text-neutral-700">
-            사전 신청자는 1순위로 초대받습니다
-          </p>
-        </div>
+        <SectionHeading
+          className="mb-12"
+          eyebrow="출시 일정"
+          title="언제 쓰실 수 있나요?"
+          subtitle="사전 신청자는 1순위로 초대받습니다"
+        />
 
         <ol className="relative ml-3 space-y-6 border-l-2 border-dashed border-neutral-200 pl-8">
           {ROADMAP.map(({ when, version, features, status }, i) => (
