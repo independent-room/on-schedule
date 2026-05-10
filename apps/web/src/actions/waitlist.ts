@@ -83,14 +83,20 @@ export async function submitWaitlist(input: WaitlistInput): Promise<WaitlistResu
 
 function buildWelcomeEmail(opts: { interview: boolean }): string {
   const interviewBlock = opts.interview
-    ? `<p>인터뷰에 동참해주셔서 감사합니다. 곧 일정 조율 메일을 별도로 드릴게요.</p>`
-    : `<p>혹시 10분만 통화 가능하시면 더 좋은 서비스를 만드는 데 큰 도움이 됩니다.<br/>회신해주시면 일정 조율 드릴게요. (참여 시 추가 1개월 무료)</p>`;
+    ? `<p style="margin-top:24px;padding:16px;background:#FFF4EA;border-radius:12px;color:#7A4A18">
+         <strong>인터뷰 참여 감사합니다</strong> — 며칠 안에 일정 조율 메일 별도로 드릴게요.
+         정식 출시 후 추가 1개월 무료가 적용됩니다 (총 4개월 무료).
+       </p>`
+    : `<p style="margin-top:24px;padding:16px;background:#FFF4EA;border-radius:12px;color:#7A4A18">
+         <strong>인터뷰 참여 시 추가 1개월 무료</strong>를 드립니다.
+         원하시면 <a href="https://onschedule.kr/thank-you" style="color:#E8761A;font-weight:600">신청 완료 페이지</a>의 "인터뷰 참여 신청" 버튼을 눌러주세요.
+       </p>`;
 
   return `
 <div style="font-family:'Pretendard JP',Pretendard,system-ui,sans-serif;max-width:520px;line-height:1.6;color:#17171A">
   <h2 style="font-size:22px;font-weight:800;margin:0 0 16px;color:#E8761A">사전 신청이 완료됐습니다</h2>
   <p>사장님, 온스케줄 사전 신청을 해주셔서 감사합니다.</p>
-  <p>출시되면 <strong>1순위로 초대 메일</strong>을 보내드릴게요. 약속드린 혜택도 잊지 않고 챙기겠습니다:</p>
+  <p>출시되면 <strong>1순위로 초대 메일</strong>을 보내드릴게요. 약속드린 혜택:</p>
   <ul>
     <li>출시 후 3개월 무료</li>
     <li>오픈 전 미리 사용</li>

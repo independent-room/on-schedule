@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { Button } from '@on-schedule/ui/components/ui/button';
 import { Nav } from '@/components/landing/Nav';
 import { Footer } from '@/components/landing/Footer';
+import { InterviewOptIn } from '@/components/InterviewOptIn';
 
 export const metadata = {
   title: '신청 완료 — 온스케줄',
@@ -10,7 +11,16 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ThankYouPage() {
+type SearchParams = Promise<{ email?: string }>;
+
+export default async function ThankYouPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { email } = await searchParams;
+  const safeEmail = email ?? null;
+
   return (
     <>
       <Nav />
@@ -42,24 +52,9 @@ export default function ThankYouPage() {
             받은편지함이 비어 있으면 <strong>스팸함</strong>도 한 번 확인 부탁드려요.
           </p>
 
-          <div className="mb-10 rounded-2xl border border-brand-500/30 bg-white p-7 text-left">
-            <p
-              className="mb-3 text-h4 text-foreground"
-              style={{
-                fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                fontWeight: 700,
-              }}
-            >
-              10분만 시간 내주실 수 있으신가요?
-            </p>
-            <p className="mb-4 text-body text-neutral-700">
-              사장님 의견을 듣고 더 좋은 서비스를 만들고 싶습니다. 인터뷰에 참여해주시면{' '}
-              <strong className="text-brand-700">추가 1개월 무료</strong> 혜택을 드려요.
-            </p>
-            <p className="text-body-s text-neutral-700">
-              곧 <strong>contact@onschedule.kr</strong>에서 일정 조율 메일을 드릴게요.
-              회신만 주시면 됩니다.
-            </p>
+          {/* 인터뷰 참여 신청 — 별도 액션 */}
+          <div className="mb-10 text-left">
+            <InterviewOptIn email={safeEmail} />
           </div>
 
           <Button

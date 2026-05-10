@@ -10,5 +10,7 @@ if (!apiKey) {
 
 export const resend = new Resend(apiKey);
 
-export const RESEND_FROM = process.env.RESEND_FROM_EMAIL ?? 'contact@send.onschedule.kr';
-export const RESEND_REPLY_TO = process.env.RESEND_REPLY_TO ?? 'contact@onschedule.kr';
+// Resend API key는 onschedule.kr (root) 도메인에만 권한.
+// 검증 단계엔 root 도메인으로 hardcode (PMF 후 multi-domain 시 env로 복원).
+export const RESEND_FROM = 'contact@onschedule.kr';
+export const RESEND_REPLY_TO = 'contact@onschedule.kr';
