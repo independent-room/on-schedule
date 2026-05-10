@@ -14,7 +14,8 @@
 
 ## 디자인 시스템
 - 출처: [`docs/design/`](../../docs/design/) (Claude Design 산출물)
-- 토큰: [`tooling/tailwind/`](../../tooling/tailwind/)
+- 토큰: [`packages/tailwind-config/`](../../packages/tailwind-config/)
+- UI 컴포넌트: [`packages/ui/`](../../packages/ui/) (shadcn/ui 기반)
 - ADR: [ADR-0016](../../docs/decisions/0016-design-system.md)
 
 ## 개발

@@ -144,13 +144,14 @@ ADR-0002에서 사장님 앱 + 고객 웹 + 백엔드 API 분리가 결정됨. �
 - 도메인: vercel.app 무료 (사용자 공개 시점에 Vercel Domains 결제)
 
 ### 라이브러리 통합 우선순위
-1. `tooling/typescript` — 5개 preset (base, nestjs, nextjs, expo, library)
-2. `tooling/tailwind` — Tailwind v3 + 카라멜 팔레트 + NativeWind v4 preset
-3. `packages/shared` — Zod 스키마 (zod-prisma-types 자동 생성 + 입력 검증 수동)
-4. `apps/api` — Prisma + nestjs-zod + Railway 배포
-5. `packages/api-client` — REST 클라이언트 + Zod 응답 파싱
-6. `apps/web` — shadcn/ui + RHF + React Query + nuqs
-7. `apps/mobile` — react-native-reusables + RHF + React Query + Zustand
+1. `packages/typescript-config` — 5개 preset (base, nestjs, nextjs, expo, library)
+2. `packages/tailwind-config` — Tailwind v3 + 카라멜 팔레트 + NativeWind v4 preset
+3. `packages/ui` — shadcn/ui 기반 공유 React 컴포넌트 (웹)
+4. `packages/shared` — Zod 스키마 (zod-prisma-types 자동 생성 + 입력 검증 수동)
+5. `apps/api` — Prisma + nestjs-zod + Railway 배포
+6. `packages/api-client` — REST 클라이언트 + Zod 응답 파싱
+7. `apps/web` — `@on-schedule/ui` import + RHF + React Query + nuqs
+8. `apps/mobile` — react-native-reusables + RHF + React Query + Zustand
 
 ### 재검토 트리거
 - API가 성장해 모듈 경계가 무거워지면 마이크로서비스 분할 검토

@@ -2,27 +2,37 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '온스케줄 — 노쇼 0건, 수수료 1/9. 동네 가게 예약 SaaS',
+  metadataBase: new URL('https://onschedule.kr'),
+  title: '온스케줄 — 예약 받기, 알림 보내기, 고객 관리까지 한 곳에',
   description:
-    '카톡 DM으로 받던 예약을 자동화하세요. 선결제로 노쇼 막고, 알림톡으로 자동 안내. 결제 수수료 0.4%.',
+    '카톡·인스타·네이버 톡톡으로 흩어진 예약을 한 곳에서. 5분 셋팅, 알림톡 무제한. 사장님이 가장 쉽게 만드는 예약 시스템.',
   applicationName: '온스케줄',
-  authors: [{ name: '온스케줄 팀' }],
+  authors: [{ name: '인디펜던트룸' }],
   keywords: [
     '온스케줄',
+    '예약 관리 프로그램',
     '베이커리 예약',
-    '디저트 예약',
-    '노쇼 관리',
+    '노쇼 방지',
     '알림톡',
-    'SaaS',
+    '예약 SaaS',
     '예약 시스템',
+    '자영업',
+    '소상공인 도구',
   ],
   openGraph: {
-    title: '온스케줄 — 노쇼 0건, 수수료 1/9',
-    description: '카톡 DM 예약 자동화. 선결제로 노쇼 막고, 알림톡 자동 안내.',
+    title: '온스케줄 — 사장님이 가장 쉽게 만드는 예약 시스템',
+    description: '카톡·인스타·네이버로 흩어진 예약을 한 곳에. 5분 셋팅, 알림톡 무제한.',
     type: 'website',
     locale: 'ko_KR',
     siteName: '온스케줄',
+    url: 'https://onschedule.kr',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: '온스케줄 — 사장님이 가장 쉽게 만드는 예약 시스템',
+    description: '카톡·인스타·네이버로 흩어진 예약을 한 곳에. 5분 셋팅, 알림톡 무제한.',
+  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

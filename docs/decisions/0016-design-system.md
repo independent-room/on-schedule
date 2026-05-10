@@ -49,12 +49,12 @@ ADR-0003에서 기술 스택을 정했으나 디자인 토큰(색·타이포·�
 
 | 파일 | 변경 |
 |---|---|
-| `tooling/tailwind/colors.ts` | 디자인 시스템 색 팔레트 전면 채택 |
-| `tooling/tailwind/theme.ts` | 타이포·간격·라운드·섀도·모션 토큰 추가 |
-| `tooling/tailwind/web.ts` | shadcn/ui CSS 변수 매핑 (브랜드 캐러멜 HSL) |
-| `tooling/tailwind/native.ts` | 모바일 토큰 + Native Tabs 색 보정 |
-| `tooling/tailwind/globals.css` | 폰트 import + HSL 변수 + 타이포 utility 클래스 |
-| `tooling/tailwind/README.md` | 정책·사용법·레퍼런스 |
+| `packages/tailwind-config/colors.ts` | 디자인 시스템 색 팔레트 전면 채택 |
+| `packages/tailwind-config/theme.ts` | 타이포·간격·라운드·섀도·모션 토큰 추가 |
+| `packages/tailwind-config/web.ts` | shadcn/ui CSS 변수 매핑 (브랜드 캐러멜 HSL) |
+| `packages/tailwind-config/native.ts` | 모바일 토큰 + Native Tabs 색 보정 |
+| `packages/ui/src/styles/globals.css` | 폰트 import + HSL 변수 + 타이포 utility 클래스 (진실 소스, apps/web에서 import) |
+| `packages/tailwind-config/README.md` | 정책·사용법·레퍼런스 |
 
 ### 원본 보존
 - `docs/design/` — Claude Design 산출물 + chat transcript 그대로 보존
@@ -88,7 +88,7 @@ ADR-0003에서 기술 스택을 정했으나 디자인 토큰(색·타이포·�
 
 ### 즉시 액션 (완료)
 - [x] `docs/design/` 원본 보존
-- [x] `tooling/tailwind/*` 전면 갱신 (5개 파일)
+- [x] `packages/tailwind-config/*` 전면 갱신 (5개 파일, 2026-05-10에 `tooling/tailwind/` → `packages/tailwind-config/` 이동, monorepo 표준 정합)
 - [x] ADR-0003 기술 스택에 디자인 시스템·폰트·아이콘 명시
 
 ### 후속 액션
@@ -104,7 +104,7 @@ ADR-0003에서 기술 스택을 정했으나 디자인 토큰(색·타이포·�
 ### 디자인 시스템 안에 있는 잔재 ("예약톡" 이름)
 - 디자인 시스템 안의 코드·문서는 "예약톡" 이름으로 만들어졌으나 (chat transcript 참조), ADR-0001/메모리에서 결정된 공식 이름은 **"온스케줄"**
 - 디자인 시스템 토큰·정책·시멘틱은 이름과 무관하게 그대로 채택
-- `docs/design/` 안의 텍스트는 원본 보존 (참조용), 우리 코드(tooling/tailwind, ADR)에선 "온스케줄"로 통일
+- `docs/design/` 안의 텍스트는 원본 보존 (참조용), 우리 코드(packages/tailwind-config, packages/ui, ADR)에선 "온스케줄"로 통일
 - 추후 디자인 시스템에서 컴포넌트 추출 시 텍스트만 "온스케줄"로 치환
 
 ## 라이선스 / 출처 정리
