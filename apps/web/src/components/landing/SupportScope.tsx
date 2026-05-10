@@ -1,4 +1,5 @@
 import { Cake, Scissors, Coffee, Sparkles, Cookie, Brush } from 'lucide-react';
+import { SectionHeading } from './SectionHeading';
 
 const INDUSTRIES = [
   { name: '베이커리', icon: Cake },
@@ -13,18 +14,23 @@ export function SupportScope() {
   return (
     <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
-        <div className="mb-12 text-center">
-          <h2 className="mb-4 font-display text-h2 font-extrabold text-foreground text-pretty md:text-[36px]">
-            베이커리부터 뷰티, 원데이클래스까지
-            <br className="hidden md:block" />
-            <span className="text-brand-500"> 온스케줄은 모든 자영업을 지원합니다</span>
-          </h2>
-          <p className="mx-auto max-w-xl text-body-l text-neutral-700">
-            업종 가리지 않는 범용 시스템입니다.
-            <br className="hidden md:block" />
-            사장님 가게 특성에 맞춰 단계별로 셋팅됩니다.
-          </p>
-        </div>
+        <SectionHeading
+          className="mb-12"
+          title={
+            <>
+              베이커리부터 뷰티, 원데이클래스까지
+              <br className="hidden md:block" />
+              <span className="text-brand-500"> 온스케줄은 모든 자영업을 지원합니다</span>
+            </>
+          }
+          subtitle={
+            <>
+              업종 가리지 않는 범용 시스템입니다.
+              <br className="hidden md:block" />
+              사장님 가게 특성에 맞춰 단계별로 셋팅됩니다.
+            </>
+          }
+        />
 
         <ul className="mx-auto flex max-w-[820px] flex-wrap justify-center gap-3">
           {INDUSTRIES.map(({ name, icon: Icon }) => (

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { cn } from '@on-schedule/ui/lib/utils';
+import { SectionHeading } from './SectionHeading';
 
 type Item = { q: string; a: React.ReactNode };
 
@@ -47,16 +48,11 @@ export function Faq() {
   return (
     <section id="faq" className="bg-cream-50/40 py-20 md:py-28">
       <div className="mx-auto max-w-[760px] px-6">
-        <div className="mb-12 text-center">
-          <span className="mb-4 inline-block rounded-full bg-accent px-3 py-1 text-[12px] font-bold text-accent-foreground">
-            자주 묻는 질문
-          </span>
-          <h2
-            className="text-h2 text-foreground md:text-[36px] font-display font-extrabold"
-          >
-            궁금한 점 있으세요?
-          </h2>
-        </div>
+        <SectionHeading
+          className="mb-12"
+          eyebrow="자주 묻는 질문"
+          title="궁금한 점 있으세요?"
+        />
 
         <div className="space-y-3">
           {ITEMS.map((item, i) => {

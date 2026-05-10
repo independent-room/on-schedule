@@ -1,4 +1,5 @@
 import { Clock, Bell, Infinity as InfinityIcon } from 'lucide-react';
+import { SectionHeading } from './SectionHeading';
 
 const POINTS = [
   {
@@ -22,16 +23,17 @@ export function ValueDeclaration() {
   return (
     <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
-        <div className="mb-14 text-center">
-          <h2 className="mb-4 font-display text-h2 font-extrabold text-foreground text-pretty md:text-[36px]">
-            온스케줄로 사장님의 든든한 운영을 돕겠습니다
-          </h2>
-          <p className="mx-auto max-w-xl text-body-l text-neutral-700">
-            예약 받기부터 알림톡 발송, 고객 관리까지
-            <br className="hidden md:block" />
-            사장님 가게 운영을 전반적으로 지원합니다
-          </p>
-        </div>
+        <SectionHeading
+          className="mb-14"
+          title="온스케줄로 사장님의 든든한 운영을 돕겠습니다"
+          subtitle={
+            <>
+              예약 받기부터 알림톡 발송, 고객 관리까지
+              <br className="hidden md:block" />
+              사장님 가게 운영을 전반적으로 지원합니다
+            </>
+          }
+        />
 
         <div className="grid gap-5 md:grid-cols-3">
           {POINTS.map(({ icon: Icon, title, desc }) => (

@@ -1,4 +1,5 @@
 import { Link2, ListChecks, MessageSquare, UserX, Users } from 'lucide-react';
+import { SectionHeading } from './SectionHeading';
 
 type Feature = {
   question: string;
@@ -53,16 +54,17 @@ export function FeatureCards() {
       className="bg-cream-50/40 py-20 md:py-28"
     >
       <div className="mx-auto max-w-[1180px] px-6">
-        <div className="mb-14 text-center">
-          <span className="mb-4 inline-block rounded-full bg-accent px-3 py-1 text-[12px] font-bold text-accent-foreground">
-            핵심 기능
-          </span>
-          <h2 className="font-display text-h2 font-extrabold text-foreground md:text-[36px]">
-            사장님이 매일 마주하던 불편함,
-            <br />
-            한 번에 해결합니다
-          </h2>
-        </div>
+        <SectionHeading
+          className="mb-14"
+          eyebrow="핵심 기능"
+          title={
+            <>
+              사장님이 매일 마주하던 불편함,
+              <br />
+              한 번에 해결합니다
+            </>
+          }
+        />
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ question, name, desc, badge, icon: Icon }) => (
