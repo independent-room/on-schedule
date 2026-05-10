@@ -1,0 +1,178 @@
+/**
+ * shadcn/ui CSS 변수 + 디자인 시스템 토큰 매핑
+ *
+ * 출처: docs/design/project/colors_and_type.css
+ * apps/web/src/app/globals.css 에서 import:
+ *   @import '@on-schedule/tailwind-config/globals.css';
+ *
+ * HSL 값은 디자인 시스템 색 (#E8761A 캐러멜 등)을 변환:
+ *   brand.500 #E8761A = hsl(25 82% 51%)
+ *   neutral.0 #FFFFFF = hsl(0 0% 100%)
+ *   neutral.1000 #17171A = hsl(240 5% 9%)
+ *   cream.50 #FBF7F1 = hsl(36 50% 97%)
+ */
+
+/* ─────────────────────────────────────────────────────────
+ * Fonts (디자인 시스템 §3.2 — Pretendard JP + Wanted Sans + JetBrains Mono)
+ * ───────────────────────────────────────────────────────── */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Background & Foreground ── */
+    --background: 0 0% 100%; /* neutral.0 (white) */
+    --foreground: 240 5% 9%; /* neutral.1000 #17171A */
+
+    /* ── Card ── */
+    --card: 0 0% 100%;
+    --card-foreground: 240 5% 9%;
+
+    /* ── Popover ── */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 9%;
+
+    /* ── Primary (브랜드 캐러멜) ── */
+    --primary: 25 82% 51%; /* brand.500 #E8761A */
+    --primary-foreground: 0 0% 100%; /* white */
+
+    /* ── Secondary (cream) ── */
+    --secondary: 36 50% 97%; /* cream.50 #FBF7F1 */
+    --secondary-foreground: 240 5% 9%;
+
+    /* ── Muted (neutral.50/100) ── */
+    --muted: 240 5% 97%; /* neutral.50 */
+    --muted-foreground: 226 5% 47%; /* neutral.700 */
+
+    /* ── Accent (brand.50 soft) ── */
+    --accent: 33 100% 96%; /* brand.50 #FFF4EA */
+    --accent-foreground: 22 90% 33%; /* brand.700 */
+
+    /* ── Destructive (danger.500 — 노쇼·거절) ── */
+    --destructive: 0 100% 63%; /* #FF4242 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* ── Border / Input / Ring ── */
+    --border: 240 5% 91%; /* neutral.200 */
+    --input: 240 5% 91%;
+    --ring: 25 82% 51%; /* brand.500 (focus ring) */
+
+    /* ── Border radius (디자인 시스템 카드 표준) ── */
+    --radius: 0.875rem; /* 14px = r-l */
+  }
+
+  .dark {
+    --background: 240 5% 9%; /* neutral.1000 */
+    --foreground: 240 5% 96%; /* neutral.50 */
+
+    --card: 240 5% 12%; /* neutral.950 */
+    --card-foreground: 240 5% 96%;
+
+    --popover: 240 5% 12%;
+    --popover-foreground: 240 5% 96%;
+
+    --primary: 25 91% 55%; /* brand.500 (다크에서도 동일) */
+    --primary-foreground: 240 5% 9%;
+
+    --secondary: 240 4% 28%; /* neutral.800 */
+    --secondary-foreground: 240 5% 96%;
+
+    --muted: 240 4% 28%;
+    --muted-foreground: 226 5% 64%; /* neutral.500 */
+
+    --accent: 240 4% 28%;
+    --accent-foreground: 33 100% 96%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 4% 28%;
+    --input: 240 4% 28%;
+    --ring: 25 91% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family:
+      'Pretendard JP', 'Pretendard Variable', 'Pretendard',
+      -apple-system, 'Apple SD Gothic Neo', 'Helvetica Neue',
+      'Noto Sans KR', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  /* 숫자 tabular (KPI·시간·가격) */
+  .numeral,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Type utility classes (디자인 시스템 colors_and_type.css 그대로)
+ * ───────────────────────────────────────────────────────── */
+@layer utilities {
+  .t-display-1 {
+    @apply font-display text-display-1;
+  }
+  .t-display-2 {
+    @apply font-display text-display-2;
+  }
+  .t-h1 {
+    @apply text-h1;
+  }
+  .t-h2 {
+    @apply text-h2;
+  }
+  .t-h3 {
+    @apply text-h3;
+  }
+  .t-h4 {
+    @apply text-h4;
+  }
+  .t-body-l {
+    @apply text-body-l;
+  }
+  .t-body {
+    @apply text-body;
+  }
+  .t-body-s {
+    @apply text-body-s;
+  }
+  .t-label-l {
+    @apply text-label-l;
+  }
+  .t-label {
+    @apply text-label;
+  }
+  .t-label-s {
+    @apply text-label-s;
+  }
+  .t-caption {
+    @apply text-caption;
+  }
+  .t-numeral-l {
+    @apply font-display text-numeral-l;
+    font-variant-numeric: tabular-nums;
+  }
+  .t-numeral {
+    @apply font-display text-numeral;
+    font-variant-numeric: tabular-nums;
+  }
+  .t-code {
+    @apply font-mono text-code;
+  }
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Components · Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-primary);display:flex;flex-direction:column;gap:16px;}
+  .row{display:flex;gap:10px;align-items:center;}
+  .label{color:var(--fg-tertiary);font:500 11px/1 var(--font-mono);min-width:90px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:600 14px/1 var(--font-sans);height:40px;padding:0 16px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:all 120ms var(--ease-standard);}
+  .btn-primary{background:var(--c-brand-500);color:#fff;}
+  .btn-primary:hover{background:var(--c-brand-600);}
+  .btn-secondary{background:#fff;color:var(--fg-primary);border-color:var(--line-strong);}
+  .btn-secondary:hover{background:var(--c-neutral-50);}
+  .btn-ghost{background:transparent;color:var(--fg-primary);}
+  .btn-ghost:hover{background:var(--c-neutral-100);}
+  .btn-danger{background:var(--c-danger-500);color:#fff;}
+  .btn-soft{background:var(--c-brand-50);color:var(--c-brand-700);}
+  .btn-sm{height:32px;padding:0 12px;font-size:13px;border-radius:8px;}
+  .btn-lg{height:48px;padding:0 22px;font-size:15px;border-radius:12px;}
+  .btn:disabled{opacity:0.4;cursor:not-allowed;}
+</style></head>
+<body>
+<div class="row"><span class="label">primary</span>
+  <button class="btn btn-primary">예약 확정하기</button>
+  <button class="btn btn-primary btn-sm">확정</button>
+  <button class="btn btn-primary btn-lg">알림톡 보내기</button>
+  <button class="btn btn-primary" disabled>비활성</button>
+</div>
+<div class="row"><span class="label">secondary</span>
+  <button class="btn btn-secondary">거절하기</button>
+  <button class="btn btn-secondary btn-sm">수정</button>
+  <button class="btn btn-soft">선결제 받기</button>
+</div>
+<div class="row"><span class="label">ghost / danger</span>
+  <button class="btn btn-ghost">나중에</button>
+  <button class="btn btn-danger">예약 취소</button>
+</div>
+</body></html>

@@ -1,0 +1,16 @@
+{
+  "name": "@on-schedule/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "description": "온스케줄 공유 TypeScript 설정 (base / nestjs / nextjs / expo / library)",
+  "files": [
+    "base.json",
+    "nestjs.json",
+    "nextjs.json",
+    "expo.json",
+    "library.json"
+  ],
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

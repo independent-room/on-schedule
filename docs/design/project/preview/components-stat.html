@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Components · Stat KPI</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-secondary);display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .stat{background:#fff;border:1px solid var(--line-normal);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;}
+  .lab{font:600 12px/1 var(--font-sans);color:var(--fg-tertiary);letter-spacing:0.02em;text-transform:uppercase;}
+  .val{font:800 28px/1 var(--font-display);color:var(--fg-primary);font-variant-numeric:tabular-nums;}
+  .delta{font:600 12px/1 var(--font-sans);display:inline-flex;align-items:center;gap:4px;}
+  .up{color:var(--c-success-600);}
+  .down{color:var(--c-danger-600);}
+</style></head>
+<body>
+<div class="stat"><span class="lab">오늘 예약</span><span class="val">12건</span><span class="delta up">▲ 어제 대비 +3</span></div>
+<div class="stat"><span class="lab">이번 주 매출</span><span class="val">₩ 1,830,000</span><span class="delta up">▲ 12.4%</span></div>
+<div class="stat"><span class="lab">노쇼율</span><span class="val">2.1%</span><span class="delta down">▼ 1.4%p</span></div>
+<div class="stat"><span class="lab">알림톡 발송</span><span class="val">38건</span><span class="delta" style="color:var(--fg-tertiary);">전송 완료</span></div>
+</body></html>

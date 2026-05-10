@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(mv \"/Users/leeyongmin/Documents/03.개인프로젝트/05.예약\" \"/Users/leeyongmin/Documents/03.개인프로젝트/05.타임잇\")",
+      "Read(//Users/leeyongmin/Documents/03.개인프로젝트/**)",
+      "WebFetch(domain:portone.io)",
+      "WebFetch(domain:channel.io)",
+      "WebFetch(domain:www.colavo.kr)",
+      "WebFetch(domain:support.claude.com)",
+      "WebFetch(domain:www.anthropic.com)",
+      "Read(//Users/leeyongmin/.claude/**)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "WebFetch(domain:docs.expo.dev)",
+      "WebFetch(*)",
+      "Bash(*)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+# dependencies
+node_modules/
+.pnp/
+.pnp.*
+
+# testing
+coverage/
+
+# build outputs
+dist/
+build/
+out/
+.next/
+.turbo/
+.expo/
+*.tsbuildinfo
+
+# misc
+.DS_Store
+*.log
+npm-debug.log*
+
+# env
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Expo / React Native
+.expo/
+.expo-shared/
+web-build/
+ios/Pods/
+android/.gradle/
+android/build/
+android/app/build/
+*.jks
+*.p12
+*.key
+*.mobileprovision
+
+# OS
+Thumbs.db

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Components · Reservation card</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-secondary);display:flex;flex-direction:column;gap:12px;}
+  .card{background:#fff;border:1px solid var(--line-normal);border-radius:14px;padding:16px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;}
+  .time{display:flex;flex-direction:column;align-items:center;min-width:64px;}
+  .time .h{font:700 22px/1 var(--font-display);font-variant-numeric:tabular-nums;color:var(--fg-primary);}
+  .time .d{font:500 12px/1 var(--font-sans);color:var(--fg-tertiary);margin-top:4px;}
+  .body .name{font:700 15px/1 var(--font-sans);color:var(--fg-primary);}
+  .body .menu{font:500 13px/1.5 var(--font-sans);color:var(--fg-secondary);margin-top:4px;}
+  .body .meta{display:flex;gap:8px;margin-top:8px;}
+  .badge{padding:3px 9px;border-radius:99px;font:600 11px/1.4 var(--font-sans);}
+  .b-ok{background:var(--c-success-50);color:var(--c-success-600);}
+  .b-wait{background:var(--c-warning-50);color:var(--c-warning-600);}
+  .b-noshow{background:var(--c-danger-50);color:var(--c-danger-600);}
+  .b-money{background:var(--c-brand-50);color:var(--c-brand-700);}
+  .actions{display:flex;gap:8px;}
+  .btn{height:36px;padding:0 14px;border-radius:8px;font:600 13px/1 var(--font-sans);border:1px solid transparent;cursor:pointer;}
+  .p{background:var(--c-brand-500);color:#fff;}
+  .s{background:#fff;border-color:var(--line-strong);color:var(--fg-primary);}
+</style></head>
+<body>
+<div class="card">
+  <div class="time"><span class="h">14:00</span><span class="d">3월 15일</span></div>
+  <div class="body">
+    <div class="name">김민지</div>
+    <div class="menu">딸기 생크림 케이크 1호 · 레터링: "생일축하해"</div>
+    <div class="meta"><span class="badge b-ok">확정</span><span class="badge b-money">선입금 30,000원</span></div>
+  </div>
+  <div class="actions"><button class="btn s">메시지</button><button class="btn p">픽업 완료</button></div>
+</div>
+<div class="card">
+  <div class="time"><span class="h">15:30</span><span class="d">3월 15일</span></div>
+  <div class="body">
+    <div class="name">이서연</div>
+    <div class="menu">바스크 치즈케이크 · 글루텐프리 옵션</div>
+    <div class="meta"><span class="badge b-wait">확정 대기</span></div>
+  </div>
+  <div class="actions"><button class="btn s">거절</button><button class="btn p">확정</button></div>
+</div>
+<div class="card">
+  <div class="time"><span class="h">16:00</span><span class="d">3월 14일</span></div>
+  <div class="body">
+    <div class="name">박지훈</div>
+    <div class="menu">티라미수 2개</div>
+    <div class="meta"><span class="badge b-noshow">노쇼 1회</span></div>
+  </div>
+  <div class="actions"><button class="btn s">기록</button></div>
+</div>
+</body></html>

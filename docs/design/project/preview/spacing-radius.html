@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Spacing & Radius</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-primary);display:flex;flex-direction:column;gap:20px;}
+  .row{display:flex;align-items:flex-end;gap:14px;}
+  .stack{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .bar{background:var(--c-brand-500);border-radius:4px;}
+  .label{color:var(--fg-tertiary);font:500 11px/1 var(--font-mono);}
+  .radii{display:flex;gap:14px;align-items:flex-end;}
+  .rsq{width:62px;height:62px;background:var(--c-neutral-100);border:1px solid var(--line-normal);}
+</style></head>
+<body>
+<div>
+  <div class="label" style="margin-bottom:8px;">SPACING — 4px BASE</div>
+  <div class="row">
+    <div class="stack"><div class="bar" style="width:4px;height:4px"></div><span class="label">1·4</span></div>
+    <div class="stack"><div class="bar" style="width:8px;height:8px"></div><span class="label">2·8</span></div>
+    <div class="stack"><div class="bar" style="width:12px;height:12px"></div><span class="label">3·12</span></div>
+    <div class="stack"><div class="bar" style="width:16px;height:16px"></div><span class="label">4·16</span></div>
+    <div class="stack"><div class="bar" style="width:24px;height:24px"></div><span class="label">6·24</span></div>
+    <div class="stack"><div class="bar" style="width:32px;height:32px"></div><span class="label">8·32</span></div>
+    <div class="stack"><div class="bar" style="width:48px;height:48px"></div><span class="label">12·48</span></div>
+    <div class="stack"><div class="bar" style="width:64px;height:64px"></div><span class="label">16·64</span></div>
+  </div>
+</div>
+<div>
+  <div class="label" style="margin-bottom:8px;">RADIUS</div>
+  <div class="radii">
+    <div class="stack"><div class="rsq" style="border-radius:4px"></div><span class="label">xs · 4</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:6px"></div><span class="label">s · 6</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:10px"></div><span class="label">m · 10</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:14px"></div><span class="label">l · 14</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:20px"></div><span class="label">xl · 20</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:28px"></div><span class="label">2xl · 28</span></div>
+    <div class="stack"><div class="rsq" style="border-radius:9999px"></div><span class="label">pill</span></div>
+  </div>
+</div>
+</body></html>

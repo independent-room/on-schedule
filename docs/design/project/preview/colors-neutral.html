@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Colors · Neutral</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:20px;background:var(--bg-primary);}
+  .scale{display:grid;grid-template-columns:repeat(11,1fr);gap:6px;}
+  .chip{aspect-ratio:1/1.2;border-radius:10px;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 9px;border:1px solid var(--line-subtle);}
+  .chip .num{font:700 11px/1 var(--font-sans);}
+  .chip .hex{font:500 9px/1 var(--font-mono);margin-top:3px;}
+  .chip.on-light .num{color:var(--fg-primary);} .chip.on-light .hex{color:var(--fg-tertiary);}
+  .chip.on-dark .num{color:#fff;} .chip.on-dark .hex{color:rgba(255,255,255,0.6);}
+</style></head>
+<body>
+<div class="scale">
+  <div class="chip on-light" style="background:#FFFFFF"><span class="num">0</span><span class="hex">FFF</span></div>
+  <div class="chip on-light" style="background:#F7F7F8"><span class="num">50</span><span class="hex">F7F7F8</span></div>
+  <div class="chip on-light" style="background:#F4F4F5"><span class="num">100</span><span class="hex">F4F4F5</span></div>
+  <div class="chip on-light" style="background:#E8E8EA"><span class="num">200</span><span class="hex">E8E8EA</span></div>
+  <div class="chip on-light" style="background:#DBDCDF"><span class="num">300</span><span class="hex">DBDCDF</span></div>
+  <div class="chip on-light" style="background:#C2C4C8"><span class="num">400</span><span class="hex">C2C4C8</span></div>
+  <div class="chip on-light" style="background:#AEB0B6"><span class="num">500</span><span class="hex">AEB0B6</span></div>
+  <div class="chip on-dark" style="background:#70737C"><span class="num">700</span><span class="hex">70737C</span></div>
+  <div class="chip on-dark" style="background:#46474B"><span class="num">800</span><span class="hex">46474B</span></div>
+  <div class="chip on-dark" style="background:#2E2F33"><span class="num">900</span><span class="hex">2E2F33</span></div>
+  <div class="chip on-dark" style="background:#17171A"><span class="num">1000</span><span class="hex">17171A</span></div>
+</div>
+</body></html>

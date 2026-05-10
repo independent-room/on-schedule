@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>온스케줄 — 노쇼 0건, 수수료 1/9. 동네 가게 예약 SaaS</title>
+<meta name="description" content="카톡 DM으로 받던 예약을 자동화하세요. 선결제로 노쇼 막고, 알림톡으로 자동 안내. 결제 수수료 0.4%.">
+<link rel="stylesheet" href="onschedule.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding-bottom: env(safe-area-inset-bottom); }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  ::selection { background: var(--accent); color: #FAF6EF; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  .nav { position: sticky; top: 0; z-index: 30;
+    background: rgba(250,246,239,0.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border); }
+  .nav .row { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark { width: 30px; height: 30px; border-radius: 8px;
+    background: var(--brand); color: #FAF6EF;
+    display: flex; align-items: center; justify-content: center;
+    font: 800 14px/1 var(--font-display); }
+  .brand-name { font: 800 19px/1 var(--font-display); letter-spacing: -0.02em; color: var(--fg); }
+  .brand-en { font: 600 12px/1 var(--font-sans); color: var(--fg-secondary); margin-left: 2px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font: 600 14px/1 var(--font-sans); color: var(--fg-secondary); }
+  .nav-links a:hover { color: var(--fg); }
+
+  /* ── BUTTONS ──────────────────────────────────────── */
+  .btn { display: inline-flex; align-items: center; gap: 8px;
+    height: 44px; padding: 0 18px; border-radius: 10px;
+    font: 700 14px/1 var(--font-sans); border: none;
+    transition: transform 120ms var(--ease-standard), background 180ms var(--ease-standard); }
+  .btn-primary { background: var(--brand); color: #FAF6EF; }
+  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .btn-accent { background: var(--accent); color: var(--brand-dark); }
+  .btn-accent:hover { background: #C7864F; transform: translateY(-1px); }
+  .btn-lg { height: 60px; padding: 0 30px; border-radius: 14px; font-size: 17px; }
+  .btn-ghost { background: transparent; color: var(--fg);
+    border: 1.5px solid var(--border-strong); }
+  .btn-ghost:hover { background: rgba(91,58,36,0.04); border-color: var(--brand); }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  .hero { padding: 88px 0 64px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; right: -20%; top: -20%;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(216,138,74,0.10), transparent 70%);
+    z-index: 0; pointer-events: none; }
+  .hero-grid { position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+  .pill { display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--brand-dark);
+    font: 700 12px/1 var(--font-sans); letter-spacing: 0.01em; margin-bottom: 24px; }
+  .pill .dot { width: 6px; height: 6px; border-radius: 99px; background: var(--accent);
+    animation: pulse 2s var(--ease-standard) infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  .h-display { font: 800 64px/1.08 var(--font-display);
+    letter-spacing: -0.036em; color: var(--fg); margin: 0 0 22px;
+    text-wrap: pretty; }
+  .h-display em { font-style: normal; color: var(--accent);
+    background: linear-gradient(180deg, transparent 62%, rgba(242,199,148,0.55) 62%);
+    padding: 0 4px; }
+  .h-lede { font: 500 19px/1.62 var(--font-sans);
+    color: var(--fg-secondary); margin: 0 0 32px; max-width: 480px;
+    text-wrap: pretty; }
+  .h-lede strong { color: var(--fg); font-weight: 700; }
+
+  .hero-form { display: flex; gap: 8px; max-width: 460px; margin-bottom: 14px; }
+  .hero-form input { flex: 1; height: 60px; padding: 0 18px;
+    border-radius: 14px; border: 1.5px solid var(--border-strong);
+    background: var(--surface); color: var(--fg);
+    font: 500 16px/1 var(--font-sans); outline: none;
+    transition: border-color 180ms var(--ease-standard); }
+  .hero-form input:focus { border-color: var(--brand); }
+  .hero-form input::placeholder { color: var(--fg-muted); }
+  .hero-microcopy { display: flex; gap: 18px; flex-wrap: wrap;
+    font: 500 13px/1.4 var(--font-sans); color: var(--fg-secondary); margin-bottom: 32px; }
+  .hero-microcopy span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-microcopy .ck { color: var(--success); font-weight: 700; }
+
+  .social-proof { display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding-top: 28px; border-top: 1px solid var(--border); }
+  .avatars { display: flex; }
+  .avatars div { width: 32px; height: 32px; border-radius: 99px; border: 2px solid var(--bg);
+    margin-left: -8px; display: flex; align-items: center; justify-content: center;
+    color: #FAF6EF; font: 700 13px/1 var(--font-sans); }
+  .avatars div:first-child { margin-left: 0; }
+  .social-proof .text { font: 500 13px/1.4 var(--font-sans); color: var(--fg-secondary); }
+  .social-proof strong { color: var(--fg); font-weight: 800; }
+  .stars { display: inline-flex; gap: 1px; color: var(--accent); margin-right: 4px; }
+
+  /* Hero phone mock */
+  .phone-stage { position: relative; justify-self: center; }
+  .phone-stage::before { content: ''; position: absolute; inset: -50px;
+    background: radial-gradient(closest-side, rgba(216,138,74,0.28), transparent 70%);
+    filter: blur(24px); z-index: 0; }
+  .phone { position: relative; width: 320px; background: #1A1410;
+    border-radius: 42px; padding: 10px; box-shadow: var(--shadow-4); }
+  .phone-screen { background: var(--surface); border-radius: 33px; padding: 20px 16px; min-height: 540px; }
+  .ph-head { display: flex; align-items: center; gap: 10px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border); }
+  .ph-shop-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .ph-shop-name { font: 700 15px/1.2 var(--font-display); color: var(--fg); }
+  .ph-shop-meta { font: 500 11px/1.3 var(--font-sans); color: var(--fg-muted); margin-top: 4px; }
+  .ph-progress { display: flex; gap: 6px; padding: 12px 0 8px; }
+  .ph-progress div { flex: 1; height: 3px; border-radius: 99px; background: var(--surface-subtle); }
+  .ph-progress div.active { background: var(--brand); }
+  .ph-title { font: 700 17px/1.3 var(--font-display); letter-spacing: -0.018em; margin: 6px 0 14px; color: var(--fg); }
+  .ph-item { display: flex; gap: 11px; align-items: center; padding: 10px;
+    margin-bottom: 8px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; }
+  .ph-item.sel { background: rgba(216,138,74,0.10); border: 2px solid var(--accent); padding: 9px; }
+  .ph-thumb { width: 44px; height: 44px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent-soft), #E5C9A1);
+    display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .ph-name { font: 600 13px/1.3 var(--font-sans); color: var(--fg); }
+  .ph-price { font: 700 12px/1 var(--font-sans); color: var(--brand);
+    margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .ph-cta { margin-top: 10px; height: 46px; border-radius: 10px;
+    background: var(--brand); color: #FAF6EF;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 14px/1 var(--font-sans); }
+
+  /* ── LOGO BAR (social proof) ───────────────────────── */
+  .logobar { padding: 32px 0; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); background: var(--surface-subtle); }
+  .logobar-label { text-align: center; font: 600 12px/1 var(--font-sans);
+    color: var(--fg-muted); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 22px; }
+  .logos { display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 40px; align-items: center; }
+  .logo-shop { font: 800 18px/1 var(--font-display);
+    color: var(--fg-secondary); letter-spacing: -0.018em; opacity: 0.66;
+    transition: opacity 180ms var(--ease-standard); }
+  .logo-shop:hover { opacity: 1; }
+  .logo-shop em { font-style: normal; color: var(--brand); }
+
+  /* ── SECTIONS ─────────────────────────────────────── */
+  .section { padding: 112px 0; }
+  .section.alt { background: var(--surface-subtle);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .section.dark { background: var(--brand-dark); color: #F4ECDF; }
+  .head { text-align: center; margin-bottom: 60px; }
+  .eyebrow { display: inline-block; padding: 5px 12px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--brand-dark);
+    font: 700 12px/1 var(--font-sans); margin-bottom: 18px;
+    letter-spacing: 0.02em; }
+  h2.title { font: 800 44px/1.16 var(--font-display);
+    letter-spacing: -0.030em; margin: 0 0 16px; color: var(--fg);
+    text-wrap: pretty; }
+  .section.dark h2.title { color: #F4ECDF; }
+  .sub { font: 500 18px/1.6 var(--font-sans);
+    color: var(--fg-secondary); margin: 0 auto; max-width: 600px;
+    text-wrap: pretty; }
+  .section.dark .sub { color: rgba(244,236,223,0.74); }
+
+  /* ── PROBLEMS ─────────────────────────────────────── */
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .problem { padding: 32px; background: var(--surface);
+    border-radius: 18px; border: 1px solid var(--border);
+    transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
+  .problem:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+  .problem-head { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
+  .problem-icon { width: 46px; height: 46px; border-radius: 12px;
+    background: var(--accent-soft); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; }
+  .problem-tag { font: 700 12px/1 var(--font-sans);
+    padding: 6px 11px; border-radius: 99px;
+    background: var(--surface-subtle); color: var(--brand); }
+  .problem h3 { font: 700 20px/1.3 var(--font-display);
+    letter-spacing: -0.018em; margin: 0 0 10px; color: var(--fg); }
+  .problem p { font: 500 14px/1.6 var(--font-sans);
+    color: var(--fg-secondary); margin: 0 0 24px; }
+  .problem-stat { padding-top: 20px; border-top: 1px solid var(--border); }
+  .problem-stat .num { font: 800 32px/1 var(--font-display);
+    color: var(--brand); letter-spacing: -0.024em; font-variant-numeric: tabular-nums; }
+  .problem-stat .lab { font: 500 12px/1 var(--font-sans);
+    color: var(--fg-muted); margin-top: 6px; }
+
+  /* ── SOLUTION STEPS ───────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 80px; }
+  .step { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .step.flip > .step-text { order: 2; }
+  .step.flip > .step-visual { order: 1; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--accent-soft); color: var(--brand-dark);
+    font: 800 16px/1 var(--font-mono); margin-bottom: 18px; }
+  .step h3 { font: 800 36px/1.2 var(--font-display);
+    letter-spacing: -0.028em; margin: 0 0 16px; color: var(--fg); }
+  .step p { font: 500 17px/1.65 var(--font-sans);
+    color: var(--fg-secondary); margin: 0 0 18px; max-width: 440px; }
+  .step-takeaway { display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px; border-radius: 99px;
+    background: var(--success-bg); color: var(--success);
+    font: 700 13px/1 var(--font-sans); }
+  .step-card { background: var(--surface); border-radius: 18px;
+    border: 1px solid var(--border); padding: 24px; box-shadow: var(--shadow-2); }
+  .step-card.alimtalk { background: #B2C7DA; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+
+  /* Step visuals (re-used) */
+  .url-line { font: 700 14px/1 var(--font-mono); color: var(--fg-muted); margin-bottom: 14px; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .menu-cell { padding: 12px; border: 1px solid var(--border); border-radius: 10px;
+    font: 600 12px/1.4 var(--font-sans); color: var(--fg); }
+  .menu-cell .p { font: 700 11px/1 var(--font-sans);
+    color: var(--brand); margin-top: 6px; font-variant-numeric: tabular-nums; }
+
+  .pay-row { display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .pay-row:last-of-type { border-bottom: 0; }
+  .pay-label { font: 500 13px/1 var(--font-sans); color: var(--fg-muted); }
+  .pay-amount { font: 600 13px/1 var(--font-sans); font-variant-numeric: tabular-nums; }
+  .pay-total { font: 700 14px/1 var(--font-sans); color: var(--fg); }
+  .pay-total-amt { font: 800 18px/1 var(--font-display); color: var(--brand); font-variant-numeric: tabular-nums; }
+  .pay-cta { margin-top: 12px; padding: 14px;
+    background: #FEE500; border-radius: 10px; text-align: center;
+    font: 700 14px/1 var(--font-sans); color: #3B1E1E; }
+
+  .kakao-msg { background: var(--surface); border-radius: 12px; padding: 12px 14px; max-width: 280px; }
+  .kakao-msg .h { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; }
+  .kakao-msg .badge { background: #FEE500; color: #3B1E1E;
+    font: 800 9px/1 var(--font-sans); padding: 3px 6px; border-radius: 4px; }
+  .kakao-msg .from { font: 700 11px/1 var(--font-sans); color: var(--fg); }
+  .kakao-msg .t { font: 700 13px/1.3 var(--font-sans); color: var(--fg); }
+  .kakao-msg .b { font: 500 12px/1.45 var(--font-sans);
+    color: var(--fg-secondary); margin-top: 4px; }
+
+  /* ── TESTIMONIALS ─────────────────────────────────── */
+  .testi-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 20px; }
+  .testi { padding: 32px; background: var(--surface);
+    border-radius: 18px; border: 1px solid var(--border);
+    display: flex; flex-direction: column; }
+  .testi.feature { background: var(--brand); color: #F4ECDF; border: 0; }
+  .testi-quote { font: 600 18px/1.55 var(--font-display);
+    letter-spacing: -0.012em; color: var(--fg); margin: 0 0 24px;
+    flex: 1; text-wrap: pretty; }
+  .testi.feature .testi-quote { color: #F4ECDF; font-size: 22px; line-height: 1.45; }
+  .testi-quote::before { content: '"'; display: block;
+    font: 800 60px/0.6 var(--font-display); color: var(--accent);
+    margin-bottom: 14px; height: 28px; }
+  .testi.feature .testi-quote::before { color: var(--accent-soft); }
+  .testi-author { display: flex; align-items: center; gap: 12px;
+    padding-top: 18px; border-top: 1px solid var(--border); }
+  .testi.feature .testi-author { border-top-color: rgba(244,236,223,0.18); }
+  .testi-avatar { width: 42px; height: 42px; border-radius: 99px;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 16px/1 var(--font-sans); color: #FAF6EF; }
+  .testi-name { font: 700 14px/1.2 var(--font-sans); color: var(--fg); }
+  .testi.feature .testi-name { color: #F4ECDF; }
+  .testi-shop { font: 500 12px/1.3 var(--font-sans); color: var(--fg-muted); margin-top: 3px; }
+  .testi.feature .testi-shop { color: rgba(244,236,223,0.62); }
+
+  /* ── COMPARE ──────────────────────────────────────── */
+  .compare { max-width: 920px; margin: 0 auto; background: var(--surface);
+    border-radius: 18px; border: 1px solid var(--border); overflow: hidden;
+    box-shadow: var(--shadow-1); }
+  .compare-head, .compare-row { display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 0; align-items: center; }
+  .compare-head { background: var(--surface-subtle); padding: 16px 24px;
+    font: 700 13px/1 var(--font-sans); color: var(--fg-secondary); }
+  .compare-head .us { color: var(--brand); position: relative; }
+  .compare-head .us::after { content: '추천'; position: absolute; top: -8px; right: -4px;
+    background: var(--accent); color: var(--brand-dark);
+    font: 700 9px/1 var(--font-sans); padding: 3px 6px; border-radius: 4px; }
+  .compare-row { padding: 18px 24px; border-top: 1px solid var(--border); }
+  .compare-row .lab { font: 600 14px/1.4 var(--font-sans); color: var(--fg); }
+  .compare-row .val { font: 600 14px/1.4 var(--font-sans); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+  .compare-row .val.us { font: 800 16px/1.2 var(--font-display); color: var(--brand); }
+
+  /* ── FAQ ──────────────────────────────────────────── */
+  .faq { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden; }
+  .faq-q { width: 100%; padding: 22px 24px; background: transparent;
+    border: none; display: flex; justify-content: space-between;
+    align-items: center; text-align: left; gap: 16px; }
+  .faq-q span.q { font: 700 16px/1.4 var(--font-sans); color: var(--fg); }
+  .faq-q .plus { font: 500 22px/1 var(--font-sans);
+    color: var(--fg-muted); transition: transform 220ms var(--ease-standard); flex-shrink: 0; }
+  .faq-item.open .plus { transform: rotate(45deg); color: var(--accent); }
+  .faq-a { max-height: 0; overflow: hidden;
+    transition: max-height 280ms var(--ease-standard);
+    font: 500 15px/1.65 var(--font-sans); color: var(--fg-secondary); }
+  .faq-item.open .faq-a { max-height: 280px; }
+  .faq-a-inner { padding: 0 24px 22px; }
+
+  /* ── FINAL CTA ────────────────────────────────────── */
+  .final-cta { padding: 96px 0; background: var(--brand-dark); color: #F4ECDF;
+    text-align: center; position: relative; overflow: hidden; }
+  .final-cta::before { content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(216,138,74,0.28), transparent 50%);
+    pointer-events: none; }
+  .final-cta .wrap { position: relative; z-index: 1; }
+  .final-cta h2 { font: 800 52px/1.14 var(--font-display);
+    letter-spacing: -0.032em; margin: 0 0 18px; color: #F4ECDF;
+    text-wrap: pretty; }
+  .final-cta h2 em { font-style: normal; color: var(--accent); }
+  .final-cta p { font: 500 18px/1.6 var(--font-sans);
+    color: rgba(244,236,223,0.74); margin: 0 auto 36px; max-width: 480px; }
+  .final-form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto 16px; }
+  .final-form input { flex: 1; height: 60px; padding: 0 18px;
+    border-radius: 14px; border: 1.5px solid rgba(244,236,223,0.2);
+    background: rgba(244,236,223,0.06); color: #F4ECDF;
+    font: 500 16px/1 var(--font-sans); outline: none;
+    transition: border-color 180ms var(--ease-standard); }
+  .final-form input:focus { border-color: var(--accent); background: rgba(244,236,223,0.10); }
+  .final-form input::placeholder { color: rgba(244,236,223,0.45); }
+  .final-microcopy { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;
+    font: 500 13px/1.4 var(--font-sans); color: rgba(244,236,223,0.62); }
+  .final-microcopy .ck { color: var(--accent); font-weight: 700; }
+  .success-state { text-align: center; padding: 16px 0; }
+  .success-circle { width: 84px; height: 84px; border-radius: 99px;
+    background: rgba(216,138,74,0.22); color: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 38px; margin-bottom: 24px; }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  .footer { background: #1A1410; color: rgba(244,236,223,0.55); padding: 40px 0; }
+  .footer .row { display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer .links { display: flex; gap: 22px;
+    font: 500 12px/1 var(--font-sans); }
+  .footer .links a:hover { color: #F4ECDF; }
+
+  /* ── STICKY MOBILE CTA ───────────────────────────── */
+  .sticky-cta { display: none; position: fixed; left: 0; right: 0; bottom: 0;
+    z-index: 40; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(250,246,239,0.96); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border); }
+  .sticky-cta a { display: flex; align-items: center; justify-content: center;
+    height: 54px; border-radius: 12px; background: var(--brand);
+    color: #FAF6EF; font: 700 16px/1 var(--font-sans); }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 920px) {
+    .nav-links { display: none; }
+    .h-display { font-size: 42px !important; line-height: 1.14 !important; }
+    h2.title { font-size: 30px !important; }
+    .final-cta h2 { font-size: 36px !important; }
+    .hero-grid, .problem-grid, .step, .testi-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .step.flip > .step-text { order: 0; }
+    .step.flip > .step-visual { order: 0; }
+    .compare-head, .compare-row { grid-template-columns: 1.2fr 1fr 1fr 1fr; padding-left: 16px; padding-right: 16px; }
+    .compare-row .val { font-size: 12px; }
+    .compare-row .val.us { font-size: 14px; }
+    .section { padding: 80px 0; }
+    .hero { padding: 56px 0 56px; }
+    .phone { width: 290px; }
+    .sticky-cta { display: block; }
+    body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  }
+  @media (max-width: 540px) {
+    .compare-head, .compare-row { grid-template-columns: 1.4fr 0.8fr 0.8fr 0.9fr; gap: 4px; }
+    .compare-head { font-size: 10px; }
+    .compare-row { padding: 14px 12px; }
+    .hero-form, .final-form { flex-direction: column; }
+    .hero-form .btn, .final-form .btn { width: 100%; }
+    .logos { gap: 24px; }
+    .logo-shop { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap row">
+  <div class="brand">
+    <div class="brand-mark">온</div>
+    <div>
+      <span class="brand-name">온스케줄</span>
+      <span class="brand-en">on schedule</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#how">기능</a>
+    <a href="#compare">수수료</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#signup" class="btn btn-primary">사전 신청 →</a>
+</div></nav>
+
+<!-- HERO ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill" data-variant="pill"><span class="dot"></span><span data-variant="pill-text">베타 3개월 무료 · 147명 신청 중</span></span>
+      <h1 class="h-display" data-variant="h1">노쇼는 <em>0건</em>으로,<br>수수료는 <em>1/9</em>로.</h1>
+      <p class="h-lede" data-variant="lede">카톡 DM으로 받던 예약을 <strong>온스케줄</strong>이 자동으로 받고, 알림톡으로 자동 안내합니다. 동네 가게 사장님을 위한 예약 SaaS.</p>
+      <form class="hero-form" id="hero-form" onsubmit="return submitHero(event)">
+        <input type="email" placeholder="이메일을 입력하세요" required id="hero-email">
+        <button type="submit" class="btn btn-accent btn-lg" data-variant="cta">먼저 받아보기</button>
+      </form>
+      <div class="hero-microcopy">
+        <span><span class="ck">✓</span>1분이면 끝</span>
+        <span><span class="ck">✓</span>신용카드 안 필요</span>
+        <span><span class="ck">✓</span>3개월 무료</span>
+      </div>
+      <div class="social-proof">
+        <div class="avatars">
+          <div style="background:#5B3A24">우</div>
+          <div style="background:#8A5A3B">김</div>
+          <div style="background:#A66E45">이</div>
+          <div style="background:#D88A4A">박</div>
+        </div>
+        <span class="text">
+          <span class="stars">★★★★★</span>
+          <strong>147명</strong>의 동네 사장님이 사전 신청 중
+        </span>
+      </div>
+    </div>
+    <div class="phone-stage">
+      <div class="phone"><div class="phone-screen">
+        <div class="ph-head">
+          <div class="ph-shop-icon">🥖</div>
+          <div>
+            <div class="ph-shop-name">베이커리 우진</div>
+            <div class="ph-shop-meta">연남동 · 화-일 12-19시</div>
+          </div>
+        </div>
+        <div class="ph-progress">
+          <div class="active"></div><div></div><div></div>
+        </div>
+        <div class="ph-title">메뉴를 골라주세요</div>
+        <div class="ph-item sel">
+          <div class="ph-thumb">🍰</div>
+          <div style="flex:1"><div class="ph-name">딸기 생크림 1호</div><div class="ph-price">38,000원</div></div>
+        </div>
+        <div class="ph-item">
+          <div class="ph-thumb">🧀</div>
+          <div style="flex:1"><div class="ph-name">바스크 치즈케이크</div><div class="ph-price">28,000원</div></div>
+        </div>
+        <div class="ph-item">
+          <div class="ph-thumb">🎂</div>
+          <div style="flex:1"><div class="ph-name">얼그레이 시폰</div><div class="ph-price">32,000원</div></div>
+        </div>
+        <div class="ph-cta">픽업 시간 선택하기</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO BAR ─────────────────────────────────── -->
+<section class="logobar">
+  <div class="wrap">
+    <div class="logobar-label">이미 사전 신청한 동네 가게</div>
+    <div class="logos">
+      <span class="logo-shop">베이커리 <em>우진</em></span>
+      <span class="logo-shop">살롱 <em>레인</em></span>
+      <span class="logo-shop">공방 <em>호두</em></span>
+      <span class="logo-shop">꽃집 <em>안녕</em></span>
+      <span class="logo-shop">카페 <em>너른들</em></span>
+      <span class="logo-shop">스튜디오 <em>오늘</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS ─────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">이런 거 겪고 계시죠?</span>
+      <h2 class="title">동네 사장님이 매일 마주치는 세 가지</h2>
+      <p class="sub">작은 가게 사장님 47분께 직접 들었어요. 가장 자주 나온 이야기예요.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem">
+        <div class="problem-head"><div class="problem-icon">😩</div><span class="problem-tag">노쇼</span></div>
+        <h3>1건당 평균 44만원이 날아갑니다</h3>
+        <p>재료 준비, 시간, 매대 자리. 노쇼는 그냥 손해가 아니라 누적되는 손실이에요.</p>
+        <div class="problem-stat"><div class="num">44.3만원</div><div class="lab">건당 평균 손실</div></div>
+      </div>
+      <div class="problem">
+        <div class="problem-head"><div class="problem-icon">💬</div><span class="problem-tag">DM 관리</span></div>
+        <h3>카톡 DM 100개를 매일 정리하느라</h3>
+        <p>언제, 누가, 뭘 예약했는지. 메모장에 옮겨 적다가 빠뜨리고, 손님과 말씀이 어긋나요.</p>
+        <div class="problem-stat"><div class="num">4분</div><div class="lab">예약 1건 처리 시간</div></div>
+      </div>
+      <div class="problem">
+        <div class="problem-head"><div class="problem-icon">💸</div><span class="problem-tag">수수료</span></div>
+        <h3>네이버 예약은 수수료가 너무 셉니다</h3>
+        <p>카드 결제마다 3.74%. 케이크 한 판에 1,500원씩 떼이는 건 작지 않아요.</p>
+        <div class="problem-stat"><div class="num">3.74%</div><div class="lab">네이버 결제 수수료</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION STEPS ───────────────────────────── -->
+<section id="how" class="section alt">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">온스케줄은 이렇게 해결해요</span>
+      <h2 class="title">3단계로 끝납니다</h2>
+      <p class="sub">처음 셋팅에 10분, 그 후엔 사장님이 손 댈 일이 거의 없어요.</p>
+    </div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-num">01</div>
+          <h3>예약 페이지 한 번만 만들어요</h3>
+          <p>메뉴, 가격, 픽업 가능 시간을 등록하세요. 가게마다 고유 링크가 나옵니다.</p>
+          <span class="step-takeaway">→ 카톡 채널·인스타에 링크 한 번만 걸어두면 끝</span>
+        </div>
+        <div class="step-visual">
+          <div class="step-card">
+            <div class="url-line">onschedule.kr/woojin-bakery</div>
+            <div class="ph-head">
+              <div class="ph-shop-icon">🥖</div>
+              <div>
+                <div class="ph-shop-name">베이커리 우진</div>
+                <div class="ph-shop-meta">연남동 · 화-일 12-19시</div>
+              </div>
+            </div>
+            <div class="menu-grid">
+              <div class="menu-cell">🍰 딸기 생크림<div class="p">38,000원</div></div>
+              <div class="menu-cell">🧀 치즈케이크<div class="p">28,000원</div></div>
+              <div class="menu-cell">🎂 시폰<div class="p">32,000원</div></div>
+              <div class="menu-cell">🥐 까눌레<div class="p">18,000원</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step flip">
+        <div class="step-text">
+          <div class="step-num">02</div>
+          <h3>손님이 페이지에서 선결제로 예약</h3>
+          <p>카카오페이로 30% 선입금. 노쇼가 줄어들고, 진짜 올 손님만 남아요.</p>
+          <span class="step-takeaway">→ 베타 사장님 평균 노쇼 92% 감소</span>
+        </div>
+        <div class="step-visual">
+          <div class="step-card">
+            <div class="pay-row"><span class="pay-label">딸기 생크림 1호</span><span class="pay-amount">38,000원</span></div>
+            <div class="pay-row"><span class="pay-total">지금 결제 (30%)</span><span class="pay-total-amt">11,400원</span></div>
+            <div class="pay-cta">카카오페이로 결제</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-num">03</div>
+          <h3>알림톡으로 자동 안내</h3>
+          <p>확정 → 전날 리마인드 → 픽업 완료. 사장님이 입력 안 해도 알아서 보내요.</p>
+          <span class="step-takeaway">→ 알림톡은 무제한 무료</span>
+        </div>
+        <div class="step-visual">
+          <div class="step-card alimtalk">
+            <div class="kakao-msg">
+              <div class="h"><span class="badge">알림톡</span><span class="from">베이커리 우진</span></div>
+              <div class="t">예약이 확정됐어요</div>
+              <div class="b">3월 15일 (토) 오후 3시 픽업</div>
+            </div>
+            <div class="kakao-msg">
+              <div class="h"><span class="badge">알림톡</span><span class="from">베이커리 우진</span></div>
+              <div class="t">내일 픽업 잊지 마세요</div>
+              <div class="b">케이크는 픽업 30분 전에 준비해 둘게요</div>
+            </div>
+            <div class="kakao-msg">
+              <div class="h"><span class="badge">알림톡</span><span class="from">베이커리 우진</span></div>
+              <div class="t">픽업 완료 — 감사합니다</div>
+              <div class="b">다음에 또 만나요!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS ─────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">베타 사장님 후기</span>
+      <h2 class="title">사장님들이 가장 많이 한 말</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi feature">
+        <p class="testi-quote">DM으로 예약 받을 땐 매일 1시간씩 메모장에 옮겨 적었어요. 지금은 그 시간이 그대로 빵 굽는 시간이 됐습니다.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--accent)">우</div>
+          <div>
+            <div class="testi-name">우진</div>
+            <div class="testi-shop">베이커리 우진 · 연남동</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <p class="testi-quote">선결제 받기 시작하고 한 달 만에 노쇼가 4건 → 0건이 됐어요. 손님들도 더 진지해진 느낌.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#8A5A3B">김</div>
+          <div>
+            <div class="testi-name">김미영</div>
+            <div class="testi-shop">살롱 레인 · 망원동</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi">
+        <p class="testi-quote">네이버 예약 수수료가 한 달 7만원이었는데 온스케줄 쓰니까 8천원. 진짜 차이가 큽니다.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#A66E45">이</div>
+          <div>
+            <div class="testi-name">이서연</div>
+            <div class="testi-shop">공방 호두 · 성수동</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE ──────────────────────────────────── -->
+<section id="compare" class="section alt">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">수수료 비교</span>
+      <h2 class="title">결제 1만원당 사장님께 들어오는 돈</h2>
+      <p class="sub">같은 매출을 일으켜도, 어디서 받느냐에 따라 손에 쥐는 돈이 달라집니다.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-head">
+        <div></div>
+        <div>네이버 예약</div>
+        <div>캐치테이블</div>
+        <div class="us">온스케줄</div>
+      </div>
+      <div class="compare-row">
+        <div class="lab">결제 수수료</div>
+        <div class="val">3.74%</div>
+        <div class="val">2.5%</div>
+        <div class="val us">0.4%</div>
+      </div>
+      <div class="compare-row">
+        <div class="lab">월 구독료</div>
+        <div class="val">없음</div>
+        <div class="val">11만원~</div>
+        <div class="val us">3만원~</div>
+      </div>
+      <div class="compare-row">
+        <div class="lab">알림톡 발송</div>
+        <div class="val">건당 9원</div>
+        <div class="val">건당 8원</div>
+        <div class="val us">무제한</div>
+      </div>
+      <div class="compare-row">
+        <div class="lab">선결제 노쇼 방지</div>
+        <div class="val">제한적</div>
+        <div class="val">없음</div>
+        <div class="val us">기본 제공</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ ─────────────────────────────────────── -->
+<section id="faq" class="section">
+  <div class="wrap">
+    <div class="head"><h2 class="title">자주 묻는 질문</h2></div>
+    <div class="faq">
+      <div class="faq-item open">
+        <button class="faq-q"><span class="q">베타 기간 동안 정말 무료인가요?</span><span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">네. 사전 신청해 주신 사장님은 정식 출시 후 3개월 동안 모든 기능을 무료로 사용하실 수 있어요. 결제 수수료(0.4%)만 발생합니다.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="q">카카오 알림톡은 따로 신청해야 하나요?</span><span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">아니요. 온스케줄 채널을 통해 보내드리기 때문에 사장님이 카카오 비즈니스 채널을 따로 만드실 필요 없어요. 발신 채널 이름은 "베이커리 우진" 처럼 가게 이름으로 표시됩니다.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="q">사용 중인 네이버 예약/캐치테이블이 있어요. 같이 쓸 수 있나요?</span><span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">네. 온스케줄은 가게 페이지를 따로 만들어드리는 거라 기존 채널과 별개로 운영하실 수 있어요. 카톡 DM이나 인스타로 들어오던 예약을 옮겨오시는 게 가장 효과적이에요.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="q">노쇼 방지가 정말 되나요?</span><span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">베타 사장님 47분 평균 기준, 선결제(30%) 도입 후 노쇼율이 평균 92% 감소했습니다. 100%는 아니지만, 한 달에 평균 4건이 1건 미만으로 줄어요.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span class="q">설치가 어려워요?</span><span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">설치는 없어요. 사전 신청 → 가게 정보 등록(10분) → 가게별 링크 받기. 그 링크를 카톡 채널/인스타 프로필에 걸어두시면 끝입니다.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA ───────────────────────────────── -->
+<section id="signup" class="final-cta">
+  <div class="wrap">
+    <div id="signup-form-block">
+      <span class="eyebrow" style="background:rgba(216,138,74,0.22);color:#F2C794">● 베타 3개월 무료</span>
+      <h2>가장 먼저 <em>받아보세요</em></h2>
+      <p>정식 출시 시 가장 먼저 알려드리고, 3개월 무료 베타에 우선 초대해 드립니다.</p>
+      <form class="final-form" id="final-form" onsubmit="return submitFinal(event)">
+        <input type="email" placeholder="이메일을 입력하세요" required id="final-email">
+        <button type="submit" class="btn btn-accent btn-lg">먼저 받아보기 →</button>
+      </form>
+      <div class="final-microcopy">
+        <span><span class="ck">✓</span>1분이면 끝</span>
+        <span><span class="ck">✓</span>신용카드 안 필요</span>
+        <span><span class="ck">✓</span>언제든 취소</span>
+      </div>
+    </div>
+    <div id="signup-success-block" style="display:none">
+      <div class="success-state">
+        <div class="success-circle">✓</div>
+        <h2>신청 완료됐어요!</h2>
+        <p id="success-msg">정식 출시 시 가장 먼저 알려드릴게요. 베타 초대장은 2~3주 안에 발송됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER ──────────────────────────────────── -->
+<footer class="footer"><div class="wrap row">
+  <div class="brand">
+    <div class="brand-mark" style="background:#D88A4A">온</div>
+    <span class="brand-name" style="color:rgba(244,236,223,0.92)">온스케줄</span>
+    <span style="font:500 12px/1 var(--font-sans);margin-left:8px">© 2026 On Schedule</span>
+  </div>
+  <div class="links">
+    <a href="#">문의: hello@onschedule.kr</a>
+    <a href="#">이용약관</a>
+    <a href="#">개인정보</a>
+  </div>
+</div></footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta"><a href="#signup">사전 신청하기 (1분) →</a></div>
+
+<!-- A/B/C variant switcher (UI) ─────────────────────── -->
+<div id="ab-switcher" style="position:fixed;right:16px;bottom:16px;z-index:50;display:none;gap:6px;padding:6px;background:rgba(26,20,16,0.92);backdrop-filter:blur(8px);border-radius:99px;box-shadow:0 8px 24px rgba(26,20,16,0.3);font-family:var(--font-sans)">
+  <button data-ab="a" style="height:30px;padding:0 12px;border:none;border-radius:99px;background:transparent;color:rgba(244,236,223,0.6);font:700 12px/1 var(--font-sans);cursor:pointer">A · 숫자형</button>
+  <button data-ab="b" style="height:30px;padding:0 12px;border:none;border-radius:99px;background:transparent;color:rgba(244,236,223,0.6);font:700 12px/1 var(--font-sans);cursor:pointer">B · 공감형</button>
+  <button data-ab="c" style="height:30px;padding:0 12px;border:none;border-radius:99px;background:transparent;color:rgba(244,236,223,0.6);font:700 12px/1 var(--font-sans);cursor:pointer">C · 시간절약형</button>
+</div>
+
+<script>
+  // ── A/B/C Hero variant routing ─────────────────────
+  // Live config: B and C run 50/50. A is preserved for ?v=a override.
+  // Cookie-sticky so a returning visitor sees the same variant.
+  const VARIANTS = {
+    a: {
+      pill: '베타 3개월 무료 · 147명 신청 중',
+      h1: '노쇼는 <em>0건</em>으로,<br>수수료는 <em>1/9</em>로.',
+      lede: '카톡 DM으로 받던 예약을 <strong>온스케줄</strong>이 자동으로 받고, 알림톡으로 자동 안내합니다. 동네 가게 사장님을 위한 예약 SaaS.',
+      cta: '먼저 받아보기',
+    },
+    b: {
+      pill: '동네 가게 사장님 47분과 함께 만들었어요',
+      h1: '카톡 DM으로<br>예약 받느라<br><em>지치셨죠?</em>',
+      lede: '노쇼, 메뉴 문의, 픽업 시간 헷갈림. <strong>온스케줄</strong>이 자동으로 받아주고, 자동으로 알려드릴게요.',
+      cta: '3개월 무료로 시작',
+    },
+    c: {
+      pill: '평균 하루 1시간 절약 · 노쇼 92% 감소',
+      h1: '하루 <em>1시간</em>,<br>사장님께 <em>돌려드립니다.</em>',
+      lede: '예약 받고, 정리하고, 안내하는 그 시간. <strong>온스케줄</strong>이 다 알아서 합니다. 사장님은 빵만 구우세요.',
+      cta: '시간 돌려받기',
+    },
+  };
+
+  function getCookie(k) {
+    return document.cookie.split('; ').find(r => r.startsWith(k + '='))?.split('=')[1];
+  }
+  function setCookie(k, v) {
+    document.cookie = `${k}=${v}; path=/; max-age=${60*60*24*60}`; // 60 days
+  }
+
+  function pickVariant() {
+    // 1) URL override (?v=a|b|c) — for QA / sharing specific variant
+    const url = new URLSearchParams(location.search).get('v');
+    if (url && VARIANTS[url]) { setCookie('ab_hero', url); return url; }
+    // 2) Sticky cookie
+    const cookie = getCookie('ab_hero');
+    if (cookie && VARIANTS[cookie]) return cookie;
+    // 3) New visitor: B or C, 50/50
+    const pick = Math.random() < 0.5 ? 'b' : 'c';
+    setCookie('ab_hero', pick);
+    return pick;
+  }
+
+  function applyVariant(v) {
+    const cfg = VARIANTS[v];
+    if (!cfg) return;
+    document.querySelector('[data-variant="pill-text"]').textContent = cfg.pill;
+    document.querySelector('[data-variant="h1"]').innerHTML = cfg.h1;
+    document.querySelector('[data-variant="lede"]').innerHTML = cfg.lede;
+    document.querySelector('[data-variant="cta"]').textContent = cfg.cta;
+    document.documentElement.setAttribute('data-ab', v);
+    // Update switcher UI active state
+    document.querySelectorAll('#ab-switcher [data-ab]').forEach(btn => {
+      const active = btn.dataset.ab === v;
+      btn.style.background = active ? 'var(--accent)' : 'transparent';
+      btn.style.color = active ? 'var(--brand-dark)' : 'rgba(244,236,223,0.6)';
+    });
+    // Track (replace with real analytics)
+    if (window.gtag) window.gtag('event', 'hero_variant_view', { variant: v });
+    console.log('[A/B] hero variant:', v);
+  }
+
+  // Init
+  applyVariant(pickVariant());
+  document.querySelectorAll('#ab-switcher [data-ab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setCookie('ab_hero', btn.dataset.ab);
+      applyVariant(btn.dataset.ab);
+    });
+  });
+  // Show switcher only in dev (?dev=1) or when running on localhost / file://
+  if (new URLSearchParams(location.search).get('dev') === '1' ||
+      ['localhost', '127.0.0.1', ''].includes(location.hostname)) {
+    document.getElementById('ab-switcher').style.display = 'flex';
+  }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item .faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.closest('.faq-item').classList.toggle('open');
+    });
+  });
+
+  function showSuccess(email) {
+    document.getElementById('signup-form-block').style.display = 'none';
+    document.getElementById('signup-success-block').style.display = 'block';
+    document.getElementById('success-msg').innerHTML =
+      '<strong style="color:#F4ECDF">' + email + '</strong>으로 정식 출시 안내를 보내드릴게요. 베타 초대장은 2~3주 안에 발송됩니다.';
+    document.getElementById('signup').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function submitHero(e) {
+    e.preventDefault();
+    const email = document.getElementById('hero-email').value;
+    document.getElementById('final-email').value = email;
+    showSuccess(email);
+    return false;
+  }
+  function submitFinal(e) {
+    e.preventDefault();
+    const email = document.getElementById('final-email').value;
+    showSuccess(email);
+    return false;
+  }
+</script>
+
+</body>
+</html>

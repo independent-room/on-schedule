@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  
+  <rect x="0" y="0" width="40" height="40" rx="11" fill="#17171A"></rect>
+  <text x="20" y="27" text-anchor="middle" font-family="&#39;Wanted Sans Variable&#39;,&#39;Pretendard JP&#39;,sans-serif" font-weight="800" font-size="20" letter-spacing="-0.02em" fill="#FFFFFF">예</text>
+  <circle cx="32" cy="32" r="4" fill="#E8761A"></circle>
+</svg>

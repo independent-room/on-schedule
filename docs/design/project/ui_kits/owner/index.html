@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>예약톡 — 사장님 대시보드</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body{margin:0;background:var(--bg-secondary);min-height:100vh;}
+  .layout{display:grid;grid-template-columns:240px 1fr;}
+  .main{min-width:0;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+function App(){
+  const [active, setActive] = useState('today');
+  const [modal, setModal] = useState(false);
+  const [items, setItems] = useState([
+    { time:'14:00', date:'3월 15일', name:'김민지', menu:'딸기 생크림 케이크 1호 · 레터링 "생일축하해"', status:{kind:'ok',label:'확정'}, money:'30,000원' },
+    { time:'14:30', date:'3월 15일', name:'이서연', menu:'바스크 치즈케이크 · 글루텐프리', status:{kind:'wait',label:'확정 대기'} },
+    { time:'15:00', date:'3월 15일', name:'박지훈', menu:'티라미수 2개', status:{kind:'ok',label:'확정'}, money:'18,000원' },
+    { time:'15:30', date:'3월 15일', name:'최예린', menu:'얼그레이 시폰 · 1호', status:{kind:'wait',label:'확정 대기'} },
+    { time:'16:00', date:'3월 14일', name:'장도윤', menu:'바닐라 까눌레 6개', status:{kind:'noshow',label:'노쇼 1회'} },
+  ]);
+  const onConfirm = i => setItems(prev => prev.map((p,j)=>j===i?{...p,status:{kind:'ok',label:'확정'}}:p));
+  const onPickup = i => setItems(prev => prev.filter((_,j)=>j!==i));
+  return (
+    <div className="layout">
+      <Sidebar active={active} onChange={setActive}/>
+      <div className="main">
+        <Topbar title="오늘 받은 예약 12건" sub="2026년 3월 15일 토요일" />
+        <KpiRow/>
+        <TodayList items={items} onConfirm={onConfirm} onPickup={onPickup}/>
+        <div style={{padding:'0 32px 32px'}}>
+          <button style={{...btnSecondary,height:44,padding:'0 18px',fontSize:14}} onClick={()=>setModal(true)}>📨 내일 픽업 고객에게 알림톡 보내기 (12명)</button>
+        </div>
+        <AlimtalkModal open={modal} onClose={()=>setModal(false)}/>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

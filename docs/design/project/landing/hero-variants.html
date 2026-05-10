@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>온스케줄 — Hero 헤드라인 변형 A/B/C</title>
+<link rel="stylesheet" href="onschedule.css">
+<style>
+  body { margin: 0; }
+  * { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #FAF6EF; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+const { DesignCanvas, DCSection, DCArtboard } = window;
+
+/* ──────────────────────────────────────────────────────────
+   Shared hero shell — same layout, different copy.
+   Renders the same phone mock + form + microcopy across all
+   3 variants so the comparison is a copy comparison only.
+   ────────────────────────────────────────────────────────── */
+
+const heroStyles = {
+  shell: {
+    width: '100%', height: '100%',
+    background: 'var(--bg)', overflow: 'hidden',
+    fontFamily: 'var(--font-sans)', color: 'var(--fg)',
+    position: 'relative',
+  },
+  glow: {
+    position: 'absolute', right: '-15%', top: '-20%',
+    width: 600, height: 600, borderRadius: '50%',
+    background: 'radial-gradient(closest-side, rgba(216,138,74,0.14), transparent 70%)',
+    pointerEvents: 'none',
+  },
+  nav: {
+    position: 'relative', zIndex: 2,
+    height: 60, padding: '0 40px',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    borderBottom: '1px solid var(--border)',
+    background: 'rgba(250,246,239,0.86)', backdropFilter: 'blur(14px)',
+  },
+  brand: { display: 'flex', alignItems: 'center', gap: 9 },
+  brandMark: {
+    width: 28, height: 28, borderRadius: 7,
+    background: 'var(--brand)', color: '#FAF6EF',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    font: '800 13px/1 var(--font-display)',
+  },
+  brandName: { font: '800 17px/1 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--fg)' },
+  navCta: {
+    height: 38, padding: '0 16px', borderRadius: 9,
+    background: 'var(--brand)', color: '#FAF6EF', border: 'none',
+    font: '700 13px/1 var(--font-sans)', cursor: 'pointer',
+  },
+  body: {
+    position: 'relative', zIndex: 1,
+    padding: '60px 56px 0',
+    display: 'grid', gridTemplateColumns: '1.05fr 0.95fr',
+    gap: 48, alignItems: 'center',
+  },
+  pill: {
+    display: 'inline-flex', alignItems: 'center', gap: 7,
+    padding: '6px 13px', borderRadius: 99,
+    background: 'var(--accent-soft)', color: 'var(--brand-dark)',
+    font: '700 11px/1 var(--font-sans)', marginBottom: 22,
+  },
+  dot: { width: 6, height: 6, borderRadius: 99, background: 'var(--accent)' },
+  lede: {
+    font: '500 17px/1.6 var(--font-sans)', color: 'var(--fg-secondary)',
+    margin: '0 0 28px', maxWidth: 460, textWrap: 'pretty',
+  },
+  ledeStrong: { color: 'var(--fg)', fontWeight: 700 },
+  form: { display: 'flex', gap: 8, maxWidth: 440, marginBottom: 12 },
+  input: {
+    flex: 1, height: 54, padding: '0 16px', borderRadius: 12,
+    border: '1.5px solid var(--border-strong)', background: 'var(--surface)',
+    color: 'var(--fg)', font: '500 15px/1 var(--font-sans)', outline: 'none',
+  },
+  cta: {
+    height: 54, padding: '0 22px', borderRadius: 12, border: 'none',
+    background: 'var(--accent)', color: 'var(--brand-dark)',
+    font: '800 15px/1 var(--font-sans)', cursor: 'pointer', whiteSpace: 'nowrap',
+  },
+  micro: {
+    display: 'flex', gap: 16, flexWrap: 'wrap',
+    font: '500 12px/1.4 var(--font-sans)', color: 'var(--fg-secondary)',
+  },
+  ck: { color: 'var(--success)', fontWeight: 700, marginRight: 5 },
+
+  /* Phone mock */
+  phoneStage: { position: 'relative', justifySelf: 'center' },
+  phoneGlow: {
+    position: 'absolute', inset: -40,
+    background: 'radial-gradient(closest-side, rgba(216,138,74,0.26), transparent 70%)',
+    filter: 'blur(20px)', zIndex: 0,
+  },
+  phone: {
+    position: 'relative', width: 280, background: '#1A1410',
+    borderRadius: 38, padding: 9, boxShadow: 'var(--shadow-4)',
+  },
+  screen: { background: 'var(--surface)', borderRadius: 30, padding: '18px 14px', minHeight: 460 },
+};
+
+function HeroShell({ pill, h1, lede, ctaLabel, ctaStyle = 'accent' }) {
+  return (
+    <div style={heroStyles.shell}>
+      <div style={heroStyles.glow} />
+      <nav style={heroStyles.nav}>
+        <div style={heroStyles.brand}>
+          <div style={heroStyles.brandMark}>온</div>
+          <span style={heroStyles.brandName}>온스케줄</span>
+        </div>
+        <button style={heroStyles.navCta}>사전 신청 →</button>
+      </nav>
+      <div style={heroStyles.body}>
+        <div>
+          <span style={heroStyles.pill}><span style={heroStyles.dot} />{pill}</span>
+          {h1}
+          <p style={heroStyles.lede}>{lede}</p>
+          <div style={heroStyles.form}>
+            <input style={heroStyles.input} placeholder="이메일을 입력하세요" />
+            <button style={{
+              ...heroStyles.cta,
+              ...(ctaStyle === 'brand' ? { background: 'var(--brand)', color: '#FAF6EF' } : {}),
+            }}>{ctaLabel}</button>
+          </div>
+          <div style={heroStyles.micro}>
+            <span><span style={heroStyles.ck}>✓</span>1분이면 끝</span>
+            <span><span style={heroStyles.ck}>✓</span>신용카드 안 필요</span>
+            <span><span style={heroStyles.ck}>✓</span>3개월 무료</span>
+          </div>
+        </div>
+        <div style={heroStyles.phoneStage}>
+          <div style={heroStyles.phoneGlow} />
+          <div style={heroStyles.phone}>
+            <div style={heroStyles.screen}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingBottom: 12, borderBottom: '1px solid var(--border)' }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>🥖</div>
+                <div>
+                  <div style={{ font: '700 14px/1.2 var(--font-display)', color: 'var(--fg)' }}>베이커리 우진</div>
+                  <div style={{ font: '500 11px/1.3 var(--font-sans)', color: 'var(--fg-muted)', marginTop: 3 }}>연남동 · 화-일 12-19시</div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 5, padding: '11px 0 6px' }}>
+                <div style={{ flex: 1, height: 3, borderRadius: 99, background: 'var(--brand)' }} />
+                <div style={{ flex: 1, height: 3, borderRadius: 99, background: 'var(--surface-subtle)' }} />
+                <div style={{ flex: 1, height: 3, borderRadius: 99, background: 'var(--surface-subtle)' }} />
+              </div>
+              <div style={{ font: '700 16px/1.3 var(--font-display)', margin: '6px 0 12px', color: 'var(--fg)' }}>메뉴를 골라주세요</div>
+              <PhoneItem icon="🍰" name="딸기 생크림 1호" price="38,000원" selected />
+              <PhoneItem icon="🧀" name="바스크 치즈케이크" price="28,000원" />
+              <PhoneItem icon="🎂" name="얼그레이 시폰" price="32,000원" />
+              <div style={{ marginTop: 10, height: 42, borderRadius: 9, background: 'var(--brand)', color: '#FAF6EF', display: 'flex', alignItems: 'center', justifyContent: 'center', font: '700 13px/1 var(--font-sans)' }}>픽업 시간 선택하기</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PhoneItem({ icon, name, price, selected }) {
+  return (
+    <div style={{
+      display: 'flex', gap: 10, alignItems: 'center', padding: selected ? 8 : 9,
+      marginBottom: 7, background: selected ? 'rgba(216,138,74,0.10)' : 'var(--surface)',
+      border: selected ? '2px solid var(--accent)' : '1px solid var(--border)', borderRadius: 9,
+    }}>
+      <div style={{ width: 40, height: 40, borderRadius: 7, background: 'linear-gradient(135deg, var(--accent-soft), #E5C9A1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>{icon}</div>
+      <div style={{ flex: 1 }}>
+        <div style={{ font: '600 12px/1.3 var(--font-sans)', color: 'var(--fg)' }}>{name}</div>
+        <div style={{ font: '700 11px/1 var(--font-sans)', color: 'var(--brand)', marginTop: 3, fontVariantNumeric: 'tabular-nums' }}>{price}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   Three variants — different copy angle, same shell.
+   ────────────────────────────────────────────────────────── */
+
+const h1Style = {
+  font: '800 50px/1.08 var(--font-display)',
+  letterSpacing: '-0.034em', color: 'var(--fg)',
+  margin: '0 0 20px', textWrap: 'pretty',
+};
+const emHl = {
+  fontStyle: 'normal', color: 'var(--accent)',
+  background: 'linear-gradient(180deg, transparent 62%, rgba(242,199,148,0.55) 62%)',
+  padding: '0 4px',
+};
+const emPlain = { fontStyle: 'normal', color: 'var(--accent)' };
+
+function VariantA() {
+  // 숫자형 — 결과를 숫자로. 분석적 사장님께.
+  return <HeroShell
+    pill="베타 3개월 무료 · 147명 신청 중"
+    h1={<h1 style={h1Style}>노쇼는 <em style={emHl}>0건</em>으로,<br />수수료는 <em style={emHl}>1/9</em>로.</h1>}
+    lede={<>카톡 DM으로 받던 예약을 <strong style={{color:'var(--fg)',fontWeight:700}}>온스케줄</strong>이 자동으로 받고, 알림톡으로 자동 안내합니다. 동네 가게 사장님을 위한 예약 SaaS.</>}
+    ctaLabel="먼저 받아보기"
+  />;
+}
+
+function VariantB() {
+  // 공감형 — 감정으로. 지친 사장님께.
+  return <HeroShell
+    pill="● 동네 가게 사장님 47분과 함께 만들었어요"
+    h1={<h1 style={h1Style}>카톡 DM으로<br />예약 받느라<br /><em style={emHl}>지치셨죠?</em></h1>}
+    lede={<>노쇼, 메뉴 문의, 픽업 시간 헷갈림. <strong style={{color:'var(--fg)',fontWeight:700}}>온스케줄</strong>이 자동으로 받아주고, 자동으로 알려드릴게요.</>}
+    ctaLabel="3개월 무료로 시작"
+  />;
+}
+
+function VariantC() {
+  // 시간절약형 — 시간 = 돈. 바쁜 사장님께.
+  return <HeroShell
+    pill="평균 하루 1시간 절약 · 노쇼 92% 감소"
+    h1={<h1 style={h1Style}>하루 <em style={emPlain}>1시간</em>,<br />사장님께 <em style={emPlain}>돌려드립니다.</em></h1>}
+    lede={<>예약 받고, 정리하고, 안내하는 그 시간. <strong style={{color:'var(--fg)',fontWeight:700}}>온스케줄</strong>이 다 알아서 합니다. 사장님은 빵만 구우세요.</>}
+    ctaLabel="시간 돌려받기"
+  />;
+}
+
+/* ──────────────────────────────────────────────────────────
+   Variant rationale notes — shown above each artboard.
+   ────────────────────────────────────────────────────────── */
+
+const noteStyle = {
+  background: '#fef4a8', color: '#5a4a2a',
+  padding: '14px 16px', borderRadius: 8, maxWidth: 560,
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontSize: 13, lineHeight: 1.55,
+  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  marginBottom: 14,
+};
+function Note({ tag, title, audience, when, risk }) {
+  return (
+    <div style={noteStyle}>
+      <div style={{ fontWeight: 800, marginBottom: 6 }}>{tag} — {title}</div>
+      <div><strong>대상:</strong> {audience}</div>
+      <div><strong>언제 강할까:</strong> {when}</div>
+      <div><strong>위험:</strong> {risk}</div>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   App
+   ────────────────────────────────────────────────────────── */
+
+const HERO_W = 1280;
+const HERO_H = 720;
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection
+        id="hero-variants"
+        title="온스케줄 Hero — 헤드라인 A/B/C"
+        subtitle="같은 페이지 / 같은 폼 / 다른 메시지 angle. 노출 비율 33/33/33로 시작 → 2주 후 winner 채택">
+
+        <DCArtboard id="variant-a" label="A · 숫자형 (현재 라이브)" width={HERO_W} height={HERO_H + 180}>
+          <div style={{ padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+            <Note
+              tag="A"
+              title="숫자형 / Result-first"
+              audience="이미 다른 예약 솔루션 써본 사장님. 비교 검토 단계."
+              when="네이버 / 캐치테이블 광고를 보고 비교하러 들어왔을 때."
+              risk="숫자가 추정값이라 reality check 필요. 'Where do these come from?' 질문 받을 수 있음." />
+            <div style={{ flex: 1, border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+              <VariantA />
+            </div>
+          </div>
+        </DCArtboard>
+
+        <DCArtboard id="variant-b" label="B · 공감형 / Pain-first" width={HERO_W} height={HERO_H + 180}>
+          <div style={{ padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+            <Note
+              tag="B"
+              title="공감형 / Pain-first"
+              audience="아직 솔루션 안 쓰고 카톡 DM으로 운영 중인 사장님. 가장 큰 시장."
+              when="페이스북 / 인스타 광고에서 cold하게 들어왔을 때 — 나의 일을 이해하는구나 신호."
+              risk="감정 지향이라 product detail이 약해 보일 수 있음. 다음 섹션에서 demo 빨리 보여줘야." />
+            <div style={{ flex: 1, border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+              <VariantB />
+            </div>
+          </div>
+        </DCArtboard>
+
+        <DCArtboard id="variant-c" label="C · 시간절약형 / Outcome-emotional" width={HERO_W} height={HERO_H + 180}>
+          <div style={{ padding: 24, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+            <Note
+              tag="C"
+              title="시간절약형 / Outcome-emotional 하이브리드"
+              audience="혼자 운영하거나 가족 운영. 하루 12시간 일하고 행정에 1시간 더 쓰는 분들."
+              when="블로그 / 후기 / 워드오브마우스 — 'OO언니가 이거 쓰고 1시간 줄었대' 채널."
+              risk="'1시간'이 너무 작아 보일 수 있음 (사장님 입장에선 큼). 후속 섹션에서 한 달 30시간으로 framing 권장." />
+            <div style={{ flex: 1, border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+              <VariantC />
+            </div>
+          </div>
+        </DCArtboard>
+
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

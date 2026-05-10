@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Components · Alimtalk preview</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:#B2C7DA;display:flex;justify-content:center;align-items:center;}
+  .talk{width:300px;background:#fff;border-radius:14px;padding:14px 16px 16px;box-shadow:var(--shadow-2);position:relative;}
+  .talk::before{content:"";position:absolute;left:-6px;top:14px;width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid #fff;}
+  .head{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line-subtle);padding-bottom:8px;margin-bottom:10px;}
+  .channel{font:700 12px/1 var(--font-sans);color:var(--fg-primary);}
+  .ka{background:#FEE500;color:#3B1E1E;font:800 9px/1 var(--font-sans);padding:2px 5px;border-radius:3px;}
+  .title{font:700 15px/1.4 var(--font-sans);color:var(--fg-primary);margin-bottom:8px;}
+  .body{font:500 13px/1.55 var(--font-sans);color:var(--fg-primary);white-space:pre-wrap;}
+  .row{display:flex;justify-content:space-between;font:500 13px/1.55 var(--font-sans);color:var(--fg-primary);}
+  .row .k{color:var(--fg-tertiary);}
+  .cta{margin-top:12px;padding:10px;background:var(--c-neutral-50);border-radius:8px;text-align:center;font:600 13px/1 var(--font-sans);color:var(--fg-primary);}
+</style></head>
+<body>
+<div class="talk">
+  <div class="head"><span class="ka">알림톡</span><span class="channel">베이커리 우진</span></div>
+  <div class="title">예약이 확정됐어요!</div>
+  <div class="body">안녕하세요, 김민지님.
+"베이커리 우진" 예약이 확정됐어요.</div>
+  <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px;">
+    <div class="row"><span class="k">픽업</span><span>3월 15일 (토) 오후 3:00</span></div>
+    <div class="row"><span class="k">메뉴</span><span>딸기 생크림 1호</span></div>
+    <div class="row"><span class="k">선입금</span><span>30,000원</span></div>
+  </div>
+  <div class="cta">예약 상세 보기</div>
+</div>
+</body></html>

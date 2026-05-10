@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Colors · Brand caramel</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:20px;background:var(--bg-primary);}
+  .scale{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;}
+  .chip{aspect-ratio:1/1.1;border-radius:12px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;border:1px solid var(--line-subtle);}
+  .chip .num{color:var(--fg-primary);font:700 13px/1 var(--font-sans);}
+  .chip .hex{color:var(--fg-tertiary);font:500 10px/1 var(--font-mono);margin-top:4px;}
+  .chip.on-dark .num,.chip.on-dark .hex{color:rgba(255,255,255,0.95);}
+  .chip.on-dark .hex{color:rgba(255,255,255,0.6);}
+</style></head>
+<body>
+<div class="scale">
+  <div class="chip" style="background:var(--c-brand-50)"><span class="num">50</span><span class="hex">#FFF4EA</span></div>
+  <div class="chip" style="background:var(--c-brand-100)"><span class="num">100</span><span class="hex">#FFE3C6</span></div>
+  <div class="chip" style="background:var(--c-brand-200)"><span class="num">200</span><span class="hex">#FFC58A</span></div>
+  <div class="chip" style="background:var(--c-brand-300)"><span class="num">300</span><span class="hex">#FFA45A</span></div>
+  <div class="chip on-dark" style="background:var(--c-brand-400)"><span class="num">400</span><span class="hex">#F58330</span></div>
+  <div class="chip on-dark" style="background:var(--c-brand-500)"><span class="num">500</span><span class="hex">#E8761A</span></div>
+  <div class="chip on-dark" style="background:var(--c-brand-600)"><span class="num">600</span><span class="hex">#C75F0F</span></div>
+  <div class="chip on-dark" style="background:var(--c-brand-700)"><span class="num">700</span><span class="hex">#9A4708</span></div>
+  <div class="chip on-dark" style="background:var(--c-brand-900)"><span class="num">900</span><span class="hex">#3E1B00</span></div>
+</div>
+</body></html>

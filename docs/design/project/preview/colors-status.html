@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Colors · Status (Domain)</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:20px;background:var(--bg-primary);}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .card{padding:18px;border-radius:14px;border:1px solid var(--line-normal);background:#fff;display:flex;flex-direction:column;gap:12px;}
+  .dot{width:12px;height:12px;border-radius:99px;}
+  .name{color:var(--fg-primary);font:700 14px/1 var(--font-sans);}
+  .meaning{color:var(--fg-tertiary);font:500 12px/1.4 var(--font-sans);}
+  .badge{align-self:flex-start;padding:4px 9px;border-radius:99px;font:600 12px/1 var(--font-sans);}
+</style></head>
+<body>
+<div class="grid">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:var(--c-success-500)"></span><span class="name">확정</span></div>
+    <span class="badge" style="background:var(--c-success-50);color:var(--c-success-600);">예약 확정</span>
+    <span class="meaning">사장님이 확정한 예약</span>
+  </div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:var(--c-warning-500)"></span><span class="name">대기</span></div>
+    <span class="badge" style="background:var(--c-warning-50);color:var(--c-warning-600);">확정 대기</span>
+    <span class="meaning">사장님 확인 전</span>
+  </div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:var(--c-danger-500)"></span><span class="name">노쇼</span></div>
+    <span class="badge" style="background:var(--c-danger-50);color:var(--c-danger-600);">노쇼 1회</span>
+    <span class="meaning">픽업 시간에 안 옴</span>
+  </div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;"><span class="dot" style="background:var(--c-neutral-500)"></span><span class="name">취소</span></div>
+    <span class="badge" style="background:var(--c-neutral-100);color:var(--c-neutral-700);">취소됨</span>
+    <span class="meaning">고객/사장 취소</span>
+  </div>
+</div>
+</body></html>

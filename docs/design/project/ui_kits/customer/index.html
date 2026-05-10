@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>베이커리 우진 — 예약</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body{margin:0;background:var(--c-neutral-100);min-height:100vh;display:flex;justify-content:center;}
+  .phone{width:390px;min-height:100vh;background:#fff;display:flex;flex-direction:column;}
+  h2{margin:0;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+const STORE = { name:'베이커리 우진', emoji:'🥖', address:'서울 마포구 연남동', hours:'화-일 12:00 - 19:00' };
+const MENUS = [
+  { id:1, name:'딸기 생크림 케이크 1호', desc:'국산 딸기 · 레터링 가능', price:38000, emoji:'🍰' },
+  { id:2, name:'바스크 치즈케이크', desc:'글루텐프리 옵션 가능', price:28000, emoji:'🧀' },
+  { id:3, name:'얼그레이 시폰 1호', desc:'홍차 향이 진한 시그니처', price:32000, emoji:'🎂' },
+  { id:4, name:'바닐라 까눌레 (6개)', desc:'마다가스카르 바닐라 빈', price:18000, emoji:'🥐' },
+];
+const SLOTS = ['12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30'];
+const UNAVAIL = new Set(['12:00','13:00','15:00']);
+
+function App(){
+  const [step,setStep] = useState(1);
+  const [menuId,setMenuId] = useState(null);
+  const [time,setTime] = useState(null);
+  const menu = MENUS.find(m=>m.id===menuId);
+  const deposit = menu ? Math.round(menu.price * 0.3 / 1000) * 1000 : 0;
+
+  return (
+    <div className="phone">
+      {step<4 && <StoreHeader store={STORE}/>}
+      {step<4 && <StepBar step={step} total={3}/>}
+      {step===1 && (
+        <>
+          <div style={{padding:'4px 20px 12px'}}>
+            <h2 style={{font:'700 22px/1.2 var(--font-display)',letterSpacing:'-0.024em'}}>메뉴를 골라주세요</h2>
+            <p style={{font:'500 13px/1.5 var(--font-sans)',color:'var(--fg-tertiary)',margin:'6px 0 0'}}>예약하실 케이크 1개를 선택해 주세요.</p>
+          </div>
+          <div style={{padding:'8px 20px 24px',display:'flex',flexDirection:'column',gap:10}}>
+            {MENUS.map(m => <MenuItem key={m.id} item={m} selected={menuId===m.id} onSelect={setMenuId}/>)}
+          </div>
+          <Summary menu={menu?.name} time={time} deposit={deposit}/>
+          <FixedBottom disabled={!menuId} label="다음" onClick={()=>setStep(2)}/>
+        </>
+      )}
+      {step===2 && (
+        <>
+          <div style={{padding:'4px 20px 12px'}}>
+            <h2 style={{font:'700 22px/1.2 var(--font-display)',letterSpacing:'-0.024em'}}>픽업 시간</h2>
+            <p style={{font:'500 13px/1.5 var(--font-sans)',color:'var(--fg-tertiary)',margin:'6px 0 0'}}>3월 15일 (토) 픽업 가능 시간이에요.</p>
+          </div>
+          <div style={{padding:'8px 20px 24px',display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8}}>
+            {SLOTS.map(s => <TimeSlot key={s} time={s} available={!UNAVAIL.has(s)} selected={time===s} onSelect={setTime}/>)}
+          </div>
+          <Summary menu={menu?.name} time={time} deposit={deposit}/>
+          <FixedBottom disabled={!time} label="다음" onClick={()=>setStep(3)}/>
+        </>
+      )}
+      {step===3 && (
+        <>
+          <div style={{padding:'4px 20px 12px'}}>
+            <h2 style={{font:'700 22px/1.2 var(--font-display)',letterSpacing:'-0.024em'}}>선입금 후 확정</h2>
+            <p style={{font:'500 13px/1.5 var(--font-sans)',color:'var(--fg-tertiary)',margin:'6px 0 0'}}>전체 금액의 30%를 먼저 결제하시면 예약이 확정돼요.</p>
+          </div>
+          <Summary menu={menu?.name} time={time} deposit={deposit}/>
+          <div style={{padding:'8px 20px',display:'flex',flexDirection:'column',gap:10}}>
+            <div style={{padding:14,border:'1px solid var(--line-strong)',borderRadius:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <span style={{font:'600 14px/1 var(--font-sans)'}}>카카오페이</span>
+              <input type="radio" name="pay" defaultChecked style={{accentColor:'var(--c-brand-500)'}}/>
+            </div>
+            <div style={{padding:14,border:'1px solid var(--line-strong)',borderRadius:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <span style={{font:'600 14px/1 var(--font-sans)'}}>신용카드</span>
+              <input type="radio" name="pay" style={{accentColor:'var(--c-brand-500)'}}/>
+            </div>
+          </div>
+          <FixedBottom label={deposit.toLocaleString()+'원 결제하기'} onClick={()=>setStep(4)}/>
+        </>
+      )}
+      {step===4 && <SuccessScreen menu={menu?.name} time={time+', 3월 15일'}/>}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

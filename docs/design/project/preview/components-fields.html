@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Components · Form fields</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-primary);display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .lbl{font:600 13px/1 var(--font-sans);color:var(--fg-primary);}
+  .help{font:500 12px/1.4 var(--font-sans);color:var(--fg-tertiary);}
+  .input{height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line-strong);font:500 15px/1 var(--font-sans);color:var(--fg-primary);background:#fff;outline:none;transition:all 120ms var(--ease-standard);}
+  .input::placeholder{color:var(--fg-quaternary);}
+  .input:focus{border-color:var(--c-brand-500);box-shadow:var(--shadow-focus);}
+  .input.error{border-color:var(--c-danger-500);}
+  .err{font:500 12px/1.4 var(--font-sans);color:var(--c-danger-600);}
+  .select{appearance:none;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2370737C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 14px center;}
+  .check{display:flex;align-items:center;gap:8px;font:500 14px/1 var(--font-sans);}
+  .check input{accent-color:var(--c-brand-500);width:18px;height:18px;}
+</style></head>
+<body>
+<div class="field">
+  <span class="lbl">고객 이름</span>
+  <input class="input" placeholder="홍길동">
+  <span class="help">예약 확인용으로만 쓰여요</span>
+</div>
+<div class="field">
+  <span class="lbl">전화번호</span>
+  <input class="input" value="010-1234-5678">
+</div>
+<div class="field">
+  <span class="lbl">픽업 시간</span>
+  <select class="input select"><option>오후 3:00</option></select>
+</div>
+<div class="field">
+  <span class="lbl">메뉴</span>
+  <input class="input error" value="딸기 케이크 (재고 0)">
+  <span class="err">오늘 마감된 메뉴예요</span>
+</div>
+<label class="check"><input type="checkbox" checked>마케팅 알림톡 수신 동의</label>
+<label class="check"><input type="checkbox">노쇼 이력이 있는 고객 자동 차단</label>
+</body></html>

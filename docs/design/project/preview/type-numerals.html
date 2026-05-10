@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<title>Type · Numerals & Mono</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-primary);display:flex;flex-direction:column;gap:18px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .card{padding:18px;border:1px solid var(--line-normal);border-radius:14px;display:flex;flex-direction:column;gap:6px;}
+  .label{color:var(--fg-tertiary);font:500 11px/1 var(--font-mono);}
+  .v{color:var(--fg-primary);}
+</style></head>
+<body>
+<div class="grid">
+  <div class="card"><span class="label">numeral-l · 32/700 tabular</span><span class="v t-numeral-l">₩ 1,830,000</span></div>
+  <div class="card"><span class="label">numeral · 20/700 tabular</span><span class="v t-numeral">12 / 30</span></div>
+  <div class="card"><span class="label">code · 13/500 mono</span><span class="v t-code">RES-2026-0428-A19</span></div>
+</div>
+<div style="display:flex;align-items:baseline;gap:18px;">
+  <span class="label" style="min-width:170px;">tabular alignment</span>
+  <pre class="t-code" style="margin:0;color:var(--fg-primary);">14:00   김민지     2건  +30,000원
+14:30   이서연     1건  +15,000원
+15:00   박지훈     3건  +52,000원</pre>
+</div>
+</body></html>
