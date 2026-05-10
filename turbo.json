@@ -3,7 +3,7 @@
   "globalDependencies": [
     "**/.env.*local",
     ".nvmrc",
-    "tooling/typescript/*.json"
+    "packages/typescript-config/*.json"
   ],
   "globalEnv": [
     "NODE_ENV"

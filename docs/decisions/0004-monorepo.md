@@ -1,7 +1,7 @@
 # ADR-0004: 모노레포 — npm workspaces + Turborepo
 
 상태: 채택
-일자: 2026-05-03 (갱신: 2026-05-05 — pnpm → npm 전환)
+일자: 2026-05-03 (갱신: 2026-05-05 — pnpm → npm 전환 / 2026-05-10 — `tooling/` 폐지, 모든 shared package를 `packages/`로 통합. `tailwind-config`, `typescript-config` 명명 정합. `packages/ui` shadcn 기반 신설)
 
 ## 컨텍스트
 
@@ -43,11 +43,11 @@ ADR-0003에서 코드베이스가 3개로 결정됨: API(NestJS) + Mobile(Expo) 
       package.json        ← "main": "expo-router/entry" 명시
     web/                  ← Next.js (고객 예약 페이지)
   packages/
-    shared/               ← Zod 스키마, 도메인 타입, 상수
-    api-client/           ← REST 클라이언트 (mobile/web 공용)
-    config-tailwind/      ← Tailwind preset (NativeWind preset 포함, mobile/web 공유)
-    config-eslint/        ← ESLint 공통 설정
-    config-tsconfig/      ← tsconfig 공통 설정
+    ui/                   ← shadcn/ui 기반 공유 React 컴포넌트 (웹) + globals.css (진실 소스)
+    shared/               ← Zod 스키마, 도메인 타입, 상수 (예정)
+    api-client/           ← REST 클라이언트 (mobile/web 공용, 예정)
+    tailwind-config/      ← Tailwind preset (NativeWind preset 포함, mobile/web 공유)
+    typescript-config/    ← tsconfig 공통 설정 (5개 preset)
   docs/                   ← 기획·결정·설계 문서
   package.json            ← workspaces: ["apps/*", "packages/*"]
   package-lock.json
@@ -142,7 +142,9 @@ package-lock.json -diff
 - 공유 타입은 `packages/shared`에 두고 모든 앱에서 import
 - API 클라이언트는 1차 수동(Zod 스키마 공유) — OpenAPI 자동 생성은 안정화 후 검토
 - CI 1개로 3개 앱 빌드/테스트, 변경된 앱만 배포 (Turborepo `--filter`)
-- `packages/config-tailwind`에 NativeWind preset 포함 — mobile/web 디자인 토큰 단일 진실
+- `packages/tailwind-config`에 NativeWind preset 포함 — mobile/web 디자인 토큰 단일 진실
+- `packages/ui`에 shadcn/ui 기반 웹 컴포넌트 (mobile은 react-native-reusables로 별도 패키지 예정)
+- `packages/ui/src/styles/globals.css`가 디자인 토큰 + 폰트 + shadcn CSS 변수의 진실 소스. apps/web의 globals.css는 한 줄 import만
 
 ### EAS Build 셋업
 - `apps/mobile/eas.json` 위치
