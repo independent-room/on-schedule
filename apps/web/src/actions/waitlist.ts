@@ -60,17 +60,22 @@ export async function submitWaitlist(input: WaitlistInput): Promise<WaitlistResu
   }
 
   // 자동 응답 메일 — 실패해도 신청 자체는 성공으로 처리 (메일은 부수효과).
-  // PMF 후엔 큐로 재시도 + Sentry 알림.
+  // Resend SDK는 throw하지 않고 { data, error } 반환하므로 error 필드를 명시적으로 체크.
   try {
-    await resend.emails.send({
+    const { data: sent, error: mailError } = await resend.emails.send({
       from: RESEND_FROM,
       replyTo: RESEND_REPLY_TO,
       to: data.email,
       subject: '[온스케줄] 사전 신청 감사합니다 — 1순위로 안내드릴게요',
       html: buildWelcomeEmail({ interview: data.interview_consent ?? false }),
     });
-  } catch (mailError) {
-    console.error('[waitlist] Resend mail failed:', mailError);
+    if (mailError) {
+      console.error('[waitlist] Resend returned error:', mailError);
+    } else {
+      console.log('[waitlist] Resend mail sent:', sent?.id);
+    }
+  } catch (mailErr) {
+    console.error('[waitlist] Resend threw:', mailErr);
   }
 
   return { ok: true };
