@@ -1,6 +1,12 @@
 import { Nav } from '@/components/landing/Nav';
 import { Hero } from '@/components/landing/Hero';
-import { Solution } from '@/components/landing/Solution';
+import { ValueDeclaration } from '@/components/landing/ValueDeclaration';
+import { FeatureCards } from '@/components/landing/FeatureCards';
+import { SupportScope } from '@/components/landing/SupportScope';
+import { ZeroBarrier } from '@/components/landing/ZeroBarrier';
+import { FounderStory } from '@/components/landing/FounderStory';
+import { Roadmap } from '@/components/landing/Roadmap';
+// Phase 3에서 갱신/추가: EarlyBird, FinalCta(폼), Faq, Footer
 import { Faq } from '@/components/landing/Faq';
 import { FinalCta } from '@/components/landing/FinalCta';
 import { Footer } from '@/components/landing/Footer';
@@ -11,7 +17,12 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
-        <Solution />
+        <ValueDeclaration />
+        <FeatureCards />
+        <SupportScope />
+        <ZeroBarrier />
+        <FounderStory />
+        <Roadmap />
         <Faq />
         <FinalCta />
       </main>
