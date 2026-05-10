@@ -6,7 +6,7 @@ import { SupportScope } from '@/components/landing/SupportScope';
 import { ZeroBarrier } from '@/components/landing/ZeroBarrier';
 import { FounderStory } from '@/components/landing/FounderStory';
 import { Roadmap } from '@/components/landing/Roadmap';
-// Phase 3에서 갱신/추가: EarlyBird, FinalCta(폼), Faq, Footer
+import { EarlyBird } from '@/components/landing/EarlyBird';
 import { Faq } from '@/components/landing/Faq';
 import { FinalCta } from '@/components/landing/FinalCta';
 import { Footer } from '@/components/landing/Footer';
@@ -23,6 +23,7 @@ export default function Page() {
         <ZeroBarrier />
         <FounderStory />
         <Roadmap />
+        <EarlyBird />
         <Faq />
         <FinalCta />
       </main>

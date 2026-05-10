@@ -2,28 +2,42 @@
 
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@on-schedule/ui/lib/utils';
 
-const items = [
+type Item = { q: string; a: React.ReactNode };
+
+const ITEMS: Item[] = [
   {
-    q: '베타 3개월 무료, 정말 카드 등록 없이 바로 쓸 수 있나요?',
-    a: '네. 사전 신청 → 베타 초대 메일 → 가게 페이지 셋업까지 카드 등록 0. 베타 3개월 동안 무료로 쓰시고, 본격 출시 시점에 월 3~5만원 구독 결제 안내드려요. 마음에 안 드시면 그냥 안 쓰시면 됩니다.',
+    q: '출시는 언제예요?',
+    a: '2026년 하반기 MVP 출시 목표. 사전 신청자는 일반 오픈 전 1순위로 초대해드립니다.',
   },
   {
-    q: '카카오 알림톡, 우리 매장 카카오 채널 없어도 되나요?',
-    a: '네. 매장 자체 채널 없으면 "[온스케줄] 알림" 같은 플랫폼 채널로 발송돼요. 카카오 비즈니스 채널 등록하시면 매장 자체 채널로 자동 전환됩니다. 채널 등록은 사장님이 직접 (3-7일 심사) 하시고요.',
+    q: '사전 신청하면 뭐가 달라져요?',
+    a: (
+      <>
+        세 가지 약속드립니다: <strong>출시 후 3개월 무료</strong>, <strong>오픈 전 미리 사용</strong>, <strong>평생 회원가 보장</strong>(가격 인상 시에도 처음 가격 그대로).
+      </>
+    ),
   },
   {
-    q: '네이버 예약·인스타 DM이랑 같이 쓸 수 있나요?',
-    a: '네, 병행 가능해요. 우리는 우리 가게 페이지 링크만 추가로 제공하는 거고, 기존 채널은 그대로 두셔도 됩니다. 단 같은 시간대 중복 예약 방지는 안 돼요 (같은 가게라도 채널 분리). 베타 단계에선 우리 페이지 위주로 받으시는 걸 권합니다.',
+    q: '지금 돈 내는 건가요?',
+    a: '아닙니다. 사전 신청은 무료, 출시 후 유료 전환 시점에만 결제 안내드려요. 이메일·업종만 남겨주시면 됩니다.',
   },
   {
-    q: '노쇼 방지 진짜 효과 있나요?',
-    a: '베타 5곳 평균 92% 감소 — 단 표본 작아 참고용. 핵심은 (1) 선결제로 자금이 잠겨 노쇼 자체 동기 ↓, (2) 노쇼 이력 누적·재예약 제한, (3) 알림톡 리마인드. 셋이 같이 작동해요. 100% 막진 못합니다.',
+    q: '셋팅이 어렵지 않나요?',
+    a: '단계별 셋업 위저드를 따라가시면 됩니다. 메뉴 → 시간 → 결제 → 알림까지 5분이면 끝나도록 설계했어요. 빈 화면에서 헤매는 일 없게 기본값을 미리 채워둡니다.',
   },
   {
-    q: '설치 같은 거 해야 하나요? 컴퓨터 잘 못 다루는데...',
-    a: '아니요. 사장님은 폰 앱(iOS·Android) 또는 웹 콘솔에서 예약 확인하시면 됩니다. 손님 페이지는 웹이라 손님이 따로 설치할 거 없어요. 가게 페이지 셋업도 5분 안 걸립니다 (베타 사장님 평균 4분 23초).',
+    q: '알림톡 진짜 무제한인가요?',
+    a: '예약 관련 알림(확정·리마인드·픽업 완료)은 무제한 포함. 마케팅 메시지(홍보·프로모션)는 별도 과금 — 추후 도입 예정.',
+  },
+  {
+    q: '베이커리 외 업종도 되나요?',
+    a: '시스템은 업종 불문 범용입니다. 베이커리·디저트·카페·뷰티·타투/반영구·원데이클래스 모두 가능. 사장님 가게 특성에 맞춰 단계별로 셋팅됩니다.',
+  },
+  {
+    q: '개인정보는 안전한가요?',
+    a: 'PIPA(개인정보보호법)을 준수합니다. 입력하신 이메일·전화번호는 출시 알림과 얼리버드 혜택 안내에만 사용하고, 제3자에게 절대 제공하지 않습니다.',
   },
 ];
 
@@ -31,69 +45,48 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-cream-50 px-6 py-28">
-      <div className="mx-auto max-w-[760px]">
-        <div className="mb-[60px] text-center">
-          <span
-            className="mb-[18px] inline-block rounded-pill bg-brand-100 px-3 py-[5px] text-[12px] font-bold text-brand-800"
-            style={{ letterSpacing: '0.02em' }}
-          >
+    <section id="faq" className="bg-cream-50/40 py-20 md:py-28">
+      <div className="mx-auto max-w-[760px] px-6">
+        <div className="mb-12 text-center">
+          <span className="mb-4 inline-block rounded-full bg-accent px-3 py-1 text-[12px] font-bold text-accent-foreground">
             자주 묻는 질문
           </span>
           <h2
-            className="text-foreground"
+            className="text-h2 text-foreground md:text-[36px]"
             style={{
-              fontFamily: 'Wanted Sans Variable, sans-serif',
+              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(32px, 5vw, 44px)',
-              lineHeight: 1.16,
-              letterSpacing: '-0.030em',
             }}
           >
-            궁금한 거, 미리 답해 드릴게요
+            궁금한 점 있으세요?
           </h2>
         </div>
 
         <div className="space-y-3">
-          {items.map((item, i) => {
+          {ITEMS.map((item, i) => {
             const isOpen = open === i;
             return (
               <div
                 key={i}
                 className={cn(
-                  'overflow-hidden rounded-[14px] border bg-white transition-all',
-                  isOpen
-                    ? 'border-brand-500 shadow-2'
-                    : 'border-line-subtle'
+                  'overflow-hidden rounded-2xl border bg-white transition-all',
+                  isOpen ? 'border-brand-500 shadow-2' : 'border-neutral-200',
                 )}
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-cream-50/50"
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-cream-50/60"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-[16px] font-bold text-foreground">
-                    {item.q}
-                  </span>
+                  <span className="text-body-l font-bold text-foreground">{item.q}</span>
                   {isOpen ? (
-                    <Minus
-                      size={20}
-                      className="shrink-0 text-brand-500"
-                      strokeWidth={2.5}
-                    />
+                    <Minus className="h-5 w-5 shrink-0 text-brand-500" strokeWidth={2.5} />
                   ) : (
-                    <Plus
-                      size={20}
-                      className="shrink-0 text-neutral-700"
-                      strokeWidth={2.5}
-                    />
+                    <Plus className="h-5 w-5 shrink-0 text-neutral-700" strokeWidth={2.5} />
                   )}
                 </button>
                 {isOpen && (
-                  <div
-                    className="border-t border-line-subtle px-6 py-5 text-[15px] leading-relaxed text-neutral-700"
-                    style={{ fontWeight: 500, lineHeight: 1.7 }}
-                  >
+                  <div className="border-t border-neutral-100 px-6 py-5 text-body leading-relaxed text-neutral-700">
                     {item.a}
                   </div>
                 )}
