@@ -57,13 +57,7 @@ export function FeatureCards() {
           <span className="mb-4 inline-block rounded-full bg-accent px-3 py-1 text-[12px] font-bold text-accent-foreground">
             핵심 기능
           </span>
-          <h2
-            className="text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
-          >
+          <h2 className="font-display text-h2 font-extrabold text-foreground md:text-[36px]">
             사장님이 매일 마주하던 불편함,
             <br />
             한 번에 해결합니다
@@ -84,13 +78,7 @@ export function FeatureCards() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-brand-700">
                   <Icon className="h-5 w-5" strokeWidth={1.75} />
                 </div>
-                <h3
-                  className="flex-1 text-h4 text-foreground"
-                  style={{
-                    fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                    fontWeight: 700,
-                  }}
-                >
+                <h3 className="flex-1 font-display text-h4 font-bold text-foreground">
                   {name}
                 </h3>
                 <span

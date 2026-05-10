@@ -11,12 +11,7 @@ export function FounderStory() {
         </div>
 
         <h2
-          className="mb-8 text-center text-h2 text-foreground md:text-[36px]"
-          style={{
-            fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-            fontWeight: 800,
-            textWrap: 'pretty',
-          }}
+          className="mb-8 text-center text-h2 text-foreground md:text-[36px] font-display font-extrabold text-pretty"
         >
           예약 SaaS를 운영하며 직접 본 문제,
           <br />

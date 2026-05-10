@@ -23,14 +23,7 @@ export function ValueDeclaration() {
     <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
         <div className="mb-14 text-center">
-          <h2
-            className="mb-4 text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-              textWrap: 'pretty',
-            }}
-          >
+          <h2 className="mb-4 font-display text-h2 font-extrabold text-foreground text-pretty md:text-[36px]">
             온스케줄로 사장님의 든든한 운영을 돕겠습니다
           </h2>
           <p className="mx-auto max-w-xl text-body-l text-neutral-700">
@@ -49,13 +42,7 @@ export function ValueDeclaration() {
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-brand-700">
                 <Icon className="h-6 w-6" strokeWidth={1.75} />
               </div>
-              <p
-                className="mb-2 text-h4 text-foreground"
-                style={{
-                  fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                  fontWeight: 700,
-                }}
-              >
+              <p className="mb-2 font-display text-h4 font-bold text-foreground">
                 {title}
               </p>
               <p className="text-body-s text-neutral-700">{desc}</p>

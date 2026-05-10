@@ -31,11 +31,7 @@ export default async function ThankYouPage({
           </div>
 
           <h1
-            className="mb-4 text-h1 text-foreground md:text-[40px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="mb-4 text-h1 text-foreground md:text-[40px] font-display font-extrabold"
           >
             신청 완료! 감사합니다.
           </h1>

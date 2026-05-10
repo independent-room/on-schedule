@@ -13,11 +13,7 @@ export default function TermsPage() {
       <main className="bg-white py-16 md:py-20">
         <article className="mx-auto max-w-[760px] px-6">
           <h1
-            className="mb-3 text-h1 text-foreground"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="mb-3 text-h1 text-foreground font-display font-extrabold"
           >
             이용약관
           </h1>

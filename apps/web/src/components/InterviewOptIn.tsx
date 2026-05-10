@@ -34,11 +34,7 @@ export function InterviewOptIn({ email }: { email: string | null }) {
           <Check className="h-6 w-6" strokeWidth={2.5} />
         </div>
         <p
-          className="mb-2 text-h4 text-foreground"
-          style={{
-            fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-            fontWeight: 700,
-          }}
+          className="mb-2 text-h4 text-foreground font-display font-bold"
         >
           인터뷰 참여 신청 완료
         </p>
@@ -58,11 +54,7 @@ export function InterviewOptIn({ email }: { email: string | null }) {
           <Sparkles className="h-5 w-5" strokeWidth={1.75} />
         </div>
         <p
-          className="text-h4 text-foreground"
-          style={{
-            fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-            fontWeight: 700,
-          }}
+          className="text-h4 text-foreground font-display font-bold"
         >
           인터뷰 참여 시 <span className="text-brand-700">추가 1개월 무료</span>
         </p>
