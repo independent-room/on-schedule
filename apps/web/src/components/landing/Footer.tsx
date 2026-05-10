@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BrandMark } from '@/components/BrandMark';
 
 export function Footer() {
   return (
@@ -7,19 +8,8 @@ export function Footer() {
         <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           {/* 브랜드 */}
           <div>
-            <div className="mb-3 flex items-center gap-2.5">
-              <div
-                className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-500 text-white"
-                style={{
-                  fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                  fontWeight: 800,
-                  fontSize: '12px',
-                  lineHeight: 1,
-                }}
-              >
-                온
-              </div>
-              <span className="text-body-l font-bold text-foreground">온스케줄</span>
+            <div className="mb-3 flex items-center gap-2">
+              <BrandMark size="sm" />
               <span className="text-body-s text-neutral-500">© 2026</span>
             </div>
             <p className="text-body-s text-neutral-700">

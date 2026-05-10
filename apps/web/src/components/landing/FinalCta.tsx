@@ -69,17 +69,10 @@ export function FinalCta() {
           <span className="mb-4 inline-block rounded-full bg-brand-500 px-3 py-1.5 text-[12px] font-bold tracking-wider text-white">
             지금 사전 신청
           </span>
-          <h2
-            className="mb-4 text-h2 md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-              color: '#F4ECDC',
-            }}
-          >
+          <h2 className="mb-4 font-display text-h2 font-extrabold text-cream-100 md:text-[36px]">
             지금 사전 신청하고 <span className="text-brand-500">1순위</span>로 받아보세요
           </h2>
-          <p className="text-body-l" style={{ color: 'rgba(244,236,220,0.74)' }}>
+          <p className="text-body-l text-cream-100/70">
             30초면 끝. 카드 등록 없음.
           </p>
         </div>

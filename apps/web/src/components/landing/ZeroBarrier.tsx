@@ -23,18 +23,13 @@ export function ZeroBarrier() {
           </div>
 
           <h2
-            className="mb-5 text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-              textWrap: 'pretty',
-            }}
+            className="mb-5 text-h2 text-foreground md:text-[36px] font-display font-extrabold text-pretty"
           >
             복잡한 셋팅 NO!{' '}
             <span className="text-brand-500">빈 화면 NO!</span>
           </h2>
 
-          <p className="mb-3 text-h4 text-foreground" style={{ fontWeight: 700 }}>
+          <p className="mb-3 text-h4 text-foreground font-bold">
             선택만 하셔도 바로 시작할 수 있어요
           </p>
 

@@ -52,11 +52,7 @@ export function Faq() {
             자주 묻는 질문
           </span>
           <h2
-            className="text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="text-h2 text-foreground md:text-[36px] font-display font-extrabold"
           >
             궁금한 점 있으세요?
           </h2>

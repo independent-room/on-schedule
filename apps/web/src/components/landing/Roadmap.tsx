@@ -37,11 +37,7 @@ export function Roadmap() {
             출시 일정
           </span>
           <h2
-            className="mb-3 text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="mb-3 text-h2 text-foreground md:text-[36px] font-display font-extrabold"
           >
             언제 쓰실 수 있나요?
           </h2>
@@ -84,11 +80,7 @@ export function Roadmap() {
                   )}
                 </div>
                 <p
-                  className="text-h4 text-foreground"
-                  style={{
-                    fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                    fontWeight: 700,
-                  }}
+                  className="text-h4 text-foreground font-display font-bold"
                 >
                   {features}
                 </p>

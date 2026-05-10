@@ -52,11 +52,7 @@ export async function EarlyBird() {
             얼리버드 한정
           </span>
           <h2
-            className="mb-3 text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="mb-3 text-h2 text-foreground md:text-[36px] font-display font-extrabold"
           >
             선착순 <span className="text-brand-500">{TARGET}명</span>에게만 드리는 혜택
           </h2>
@@ -75,11 +71,7 @@ export async function EarlyBird() {
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
               <p
-                className="mb-2 text-h4 text-foreground"
-                style={{
-                  fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                  fontWeight: 700,
-                }}
+                className="mb-2 text-h4 text-foreground font-display font-bold"
               >
                 {title}
               </p>
@@ -91,7 +83,7 @@ export async function EarlyBird() {
         {/* 신청 카운터 + 진행 바 */}
         <div className="rounded-2xl border border-brand-500/30 bg-cream-50/60 p-7">
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-            <p className="text-h3 text-foreground" style={{ fontWeight: 800 }}>
+            <p className="text-h3 text-foreground font-extrabold">
               <span className="text-brand-500">{count}</span>
               <span className="text-neutral-500">/{TARGET}명</span>
               <span className="ml-2 text-body-s font-medium text-neutral-700">

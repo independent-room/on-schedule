@@ -14,14 +14,7 @@ export function SupportScope() {
     <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
         <div className="mb-12 text-center">
-          <h2
-            className="mb-4 text-h2 text-foreground md:text-[36px]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-              textWrap: 'pretty',
-            }}
-          >
+          <h2 className="mb-4 font-display text-h2 font-extrabold text-foreground text-pretty md:text-[36px]">
             베이커리부터 뷰티, 원데이클래스까지
             <br className="hidden md:block" />
             <span className="text-brand-500"> 온스케줄은 모든 자영업을 지원합니다</span>

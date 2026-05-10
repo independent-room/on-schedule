@@ -8,28 +8,18 @@ export function Hero() {
       <div className="relative z-10 mx-auto grid max-w-[1180px] items-center gap-16 px-6 md:grid-cols-[1.05fr_0.95fr]">
         {/* 좌측: 메시지 */}
         <div>
-          <span
-            className="mb-6 inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 text-[12px] font-bold text-accent-foreground"
-            style={{ letterSpacing: '0.01em' }}
-          >
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 text-[12px] font-bold tracking-wide text-accent-foreground">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-brand-500" />
             사전 신청 진행 중 · 선착순 100명
           </span>
 
-          <h1
-            className="mb-6 text-[44px] leading-[1.13] tracking-[-0.030em] text-foreground md:text-[56px] md:leading-[1.08]"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-              textWrap: 'pretty',
-            }}
-          >
+          <h1 className="mb-6 font-display text-[44px] font-extrabold leading-[1.13] tracking-[-0.030em] text-foreground text-pretty md:text-[56px] md:leading-[1.08]">
             예약 받기, 알림 보내기,{' '}
             <span className="text-highlight">고객 관리까지</span>
             <br className="hidden md:block" /> 모두 한 곳에
           </h1>
 
-          <p className="mb-3 text-h4 text-foreground" style={{ fontWeight: 700 }}>
+          <p className="mb-3 text-h4 font-bold text-foreground">
             사장님이 가장 쉽게 만드는 예약 시스템
           </p>
 
@@ -84,12 +74,7 @@ export function Hero() {
                   🍞
                 </div>
                 <div>
-                  <p
-                    className="text-h4 text-foreground"
-                    style={{
-                      fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-                    }}
-                  >
+                  <p className="font-display text-h4 text-foreground">
                     베이커리 우진
                   </p>
                   <p className="text-[12px] text-neutral-700">오늘의 예약 7건</p>
@@ -138,7 +123,7 @@ export function Hero() {
                 <p className="text-[11px] font-bold uppercase tracking-wider text-brand-700">
                   한 곳에서 관리
                 </p>
-                <p className="mt-1 text-h3 text-foreground" style={{ fontWeight: 800 }}>
+                <p className="mt-1 font-display text-h3 font-extrabold text-foreground">
                   카톡 · 인스타 · 톡톡
                 </p>
               </div>

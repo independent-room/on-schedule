@@ -13,11 +13,7 @@ export default function PrivacyPage() {
       <main className="bg-white py-16 md:py-20">
         <article className="prose-on-schedule mx-auto max-w-[760px] px-6">
           <h1
-            className="mb-3 text-h1 text-foreground"
-            style={{
-              fontFamily: 'Wanted Sans Variable, Wanted Sans, sans-serif',
-              fontWeight: 800,
-            }}
+            className="mb-3 text-h1 text-foreground font-display font-extrabold"
           >
             개인정보처리방침
           </h1>
