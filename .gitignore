@@ -47,3 +47,9 @@ android/app/build/
 
 # OS
 Thumbs.db
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Claude Code local settings (user-specific permissions)
+.claude/settings.local.json

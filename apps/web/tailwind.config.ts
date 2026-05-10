@@ -5,7 +5,7 @@ export default {
   presets: [preset],
   content: [
     './src/**/*.{ts,tsx,mdx}',
-    '../../packages/**/*.{ts,tsx}',
+    '../../packages/ui/src/**/*.{ts,tsx}',
   ],
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

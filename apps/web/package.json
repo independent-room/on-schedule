@@ -13,6 +13,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@on-schedule/tailwind-config": "*",
+    "@on-schedule/ui": "*",
     "@radix-ui/react-slot": "^1.1.0",
     "@tanstack/react-query": "^5.62.0",
     "class-variance-authority": "^0.7.1",
