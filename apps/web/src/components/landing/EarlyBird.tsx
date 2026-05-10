@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { unstable_noStore as noStore } from 'next/cache';
 import { Calendar, Sparkles, ShieldCheck } from 'lucide-react';
 import { Button } from '@on-schedule/ui/components/ui/button';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -6,6 +7,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 const TARGET = 100;
 
 async function getWaitlistCount(): Promise<number> {
+  // build-time static rendering 방지 → 매 요청 fresh count
+  noStore();
   try {
     const { count, error } = await supabaseAdmin
       .from('waitlist')
