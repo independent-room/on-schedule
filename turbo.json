@@ -11,6 +11,14 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+        "SUPABASE_SECRET_KEY",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL",
+        "RESEND_REPLY_TO"
+      ],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
