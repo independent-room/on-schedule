@@ -40,7 +40,6 @@ export function FinalCta() {
   const [phone, setPhone] = useState('');
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
-  const [interviewConsent, setInterviewConsent] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -51,14 +50,13 @@ export function FinalCta() {
       privacy_consent: privacyConsent as true,
       marketing_consent: marketingConsent as true,
       ...(phone ? { phone } : {}),
-      ...(interviewConsent ? { interview_consent: true } : {}),
     };
     await submit(input);
   }
 
-  // 제출 성공 시 thank-you로 이동
+  // 제출 성공 시 thank-you로 이동 (이메일을 query param으로 전달 — 인터뷰 신청 시 식별용)
   if (status === 'success') {
-    router.push('/thank-you');
+    router.push(`/thank-you?email=${encodeURIComponent(email)}`);
   }
 
   const errorMessage =
@@ -177,18 +175,6 @@ export function FinalCta() {
               />
               <Label htmlFor="marketing" className="text-body-s leading-relaxed cursor-pointer">
                 <span className="text-destructive">[필수]</span> 출시 알림 수신에 동의합니다
-              </Label>
-            </div>
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="interview"
-                checked={interviewConsent}
-                onCheckedChange={(v) => setInterviewConsent(v === true)}
-                className="mt-0.5"
-              />
-              <Label htmlFor="interview" className="text-body-s leading-relaxed cursor-pointer">
-                <span className="text-neutral-500">[선택]</span> 베타 인터뷰 참여 가능 — 참여 시{' '}
-                <strong className="text-brand-700">추가 1개월 무료</strong>
               </Label>
             </div>
           </div>
