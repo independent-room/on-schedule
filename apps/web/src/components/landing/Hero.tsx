@@ -13,7 +13,7 @@ export function Hero() {
             사전 신청 진행 중 · 선착순 100명
           </span>
 
-          <h1 className="mb-6 font-display text-[44px] font-extrabold leading-[1.13] tracking-[-0.030em] text-foreground text-pretty md:text-[56px] md:leading-[1.08]">
+          <h1 className="mb-6 font-display text-[44px] font-extrabold leading-[1.13] tracking-[-0.030em] text-foreground text-balance break-keep md:text-[56px] md:leading-[1.08]">
             예약 받기, 알림 보내기,{' '}
             <span className="text-highlight">고객 관리까지</span>
             <br className="hidden md:block" /> 모두 한 곳에

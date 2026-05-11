@@ -102,6 +102,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+    /* 한국어 단어 가운데 wrap 방지 (영어 단어 동작은 영향 없음) */
+    word-break: keep-all;
   }
 
   /* 숫자 tabular (KPI·시간·가격) */
@@ -114,11 +116,14 @@
  * 랜딩 페이지 전용 추가 스타일
  * ──────────────────────────────────────────────── */
 @layer utilities {
-  /* 텍스트 강조 (캐러멜 하이라이터 효과) */
+  /* 텍스트 강조 (캐러멜 하이라이터 효과)
+   * box-decoration-break: clone — 모바일에서 wrap될 때 하이라이트 배경이 각 줄에 복제되도록 */
   .text-highlight {
     background: linear-gradient(180deg, transparent 62%, hsl(33 100% 80% / 0.55) 62%);
     padding: 0 4px;
     color: hsl(var(--primary));
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* 펄스 닷 (히어로 pill 안의 살아있는 점) */
