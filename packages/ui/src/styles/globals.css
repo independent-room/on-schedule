@@ -6,12 +6,10 @@
  */
 
 /* ────────────────────────────────────────────────
- * Fonts (Pretendard JP + Wanted Sans + JetBrains Mono — 모두 OFL)
+ * Fonts — apps/web/src/app/layout.tsx의 next/font에서 self-host.
+ * CSS variable 발급: --font-sans (Pretendard) / --font-display (Wanted Sans) / --font-mono (JetBrains Mono).
+ * Tailwind theme.ts의 fontFamily가 같은 변수 참조.
  * ──────────────────────────────────────────────── */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
-@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -94,11 +92,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family:
-      'Pretendard JP', 'Pretendard Variable', 'Pretendard',
-      -apple-system, 'Apple SD Gothic Neo', 'Helvetica Neue',
-      'Noto Sans KR', system-ui, sans-serif;
+    @apply bg-background font-sans text-foreground;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'rlig' 1, 'calt' 1;

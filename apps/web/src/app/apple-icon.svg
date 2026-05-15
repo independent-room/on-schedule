@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <rect width="180" height="180" rx="40" fill="#E8761A"/>
-  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="Pretendard, 'Apple SD Gothic Neo', system-ui, sans-serif" font-size="100" font-weight="800">온</text>
+  <rect width="180" height="180" rx="40" fill="#E8761A"></rect>
+  <circle cx="73" cy="90" r="31" stroke="#FAF6EF" stroke-width="12" fill="none"></circle>
+  <circle cx="124" cy="118" r="10" fill="#FAF6EF"></circle>
 </svg>
