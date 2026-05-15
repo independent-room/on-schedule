@@ -1,6 +1,11 @@
 import { ImageResponse } from 'next/og';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
-export const runtime = 'edge';
+// runtime: nodejs (default). edge는 Vercel Hobby plan 1MB 한도, Pretendard OTF 3.2MB라 초과.
+// og:image는 소셜 크롤러 1회 + 캐시라 cold start 영향 무시 가능.
+// dynamic 강제: build time prerender 막아 readFile 호출이 런타임으로 미뤄짐.
+export const dynamic = 'force-dynamic';
 export const alt = '온스케줄 — 사장님이 가장 쉽게 만드는 예약 시스템';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -8,13 +13,12 @@ export const contentType = 'image/png';
 // satori(ImageResponse) supports TTF/OTF only — woff2 미지원.
 // 로컬 self-host로 외부 의존 0. import.meta.url로 edge runtime에서 정적 자산 resolve.
 export default async function OGImage() {
+  // process.cwd() = workspace dir (apps/web). dev/Vercel 모두 동일.
+  // outputFileTracingIncludes로 빌드 시 폰트 함수 번들에 포함 보장.
+  const fontDir = path.join(process.cwd(), 'src/fonts');
   const [bold, extraBold] = await Promise.all([
-    fetch(new URL('../fonts/Pretendard-Bold.otf', import.meta.url)).then((r) =>
-      r.arrayBuffer(),
-    ),
-    fetch(new URL('../fonts/Pretendard-ExtraBold.otf', import.meta.url)).then((r) =>
-      r.arrayBuffer(),
-    ),
+    readFile(path.join(fontDir, 'Pretendard-Bold.otf')),
+    readFile(path.join(fontDir, 'Pretendard-ExtraBold.otf')),
   ]);
 
   return new ImageResponse(
