@@ -55,6 +55,7 @@ Thumbs.db
 /m-*.png
 /mobile-*.png
 /pc-*.png
+/brand-*.png
 
 # Claude Code local settings (user-specific permissions)
 .claude/settings.local.json

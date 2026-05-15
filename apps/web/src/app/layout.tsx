@@ -1,5 +1,28 @@
 import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
+import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+
+const pretendard = localFont({
+  src: '../fonts/PretendardVariable.woff2',
+  variable: '--font-sans',
+  display: 'swap',
+  weight: '45 920',
+});
+
+const wantedSans = localFont({
+  src: '../fonts/WantedSansVariable.woff2',
+  variable: '--font-display',
+  display: 'swap',
+  weight: '40 900',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+  weight: ['400', '500'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://onschedule.kr'),
@@ -47,7 +70,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html
+      lang="ko"
+      suppressHydrationWarning
+      className={`${pretendard.variable} ${wantedSans.variable} ${jetbrainsMono.variable}`}
+    >
       <body className="bg-background text-foreground antialiased pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pb-0">
         {children}
       </body>
