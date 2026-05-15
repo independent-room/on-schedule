@@ -31,7 +31,7 @@ const ROADMAP: Milestone[] = [
 
 export function Roadmap() {
   return (
-    <section className="bg-cream-50/40 py-20 md:py-28">
+    <section className="bg-cream-50/40 py-14 md:py-28">
       <div className="mx-auto max-w-[920px] px-6">
         <SectionHeading
           className="mb-12"

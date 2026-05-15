@@ -46,7 +46,7 @@ export async function EarlyBird() {
   const remaining = Math.max(TARGET - count, 0);
 
   return (
-    <section className="border-y border-neutral-200 bg-white py-20 md:py-28">
+    <section className="border-y border-neutral-200 bg-white py-14 md:py-28">
       <div className="mx-auto max-w-[920px] px-6">
         <SectionHeading
           className="mb-12"
@@ -64,7 +64,7 @@ export async function EarlyBird() {
           {BENEFITS.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="rounded-2xl border border-neutral-200 bg-cream-50/40 p-7"
+              className="rounded-2xl border border-neutral-200 bg-cream-50/40 p-5 md:p-7"
             >
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-500/10 text-brand-700">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
@@ -80,7 +80,7 @@ export async function EarlyBird() {
         </div>
 
         {/* 신청 카운터 + 진행 바 */}
-        <div className="rounded-2xl border border-brand-500/30 bg-cream-50/60 p-7">
+        <div className="rounded-2xl border border-brand-500/30 bg-cream-50/60 p-5 md:p-7">
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
             <p className="text-h3 text-foreground font-extrabold">
               <span className="text-brand-500">{count}</span>

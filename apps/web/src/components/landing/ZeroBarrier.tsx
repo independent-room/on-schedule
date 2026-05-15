@@ -6,7 +6,7 @@ const STEPS = ['메뉴', '시간', '결제', '알림', '완료'];
 
 export function ZeroBarrier() {
   return (
-    <section className="bg-cream-50/40 py-20 md:py-28">
+    <section className="bg-cream-50/40 py-14 md:py-28">
       <div className="mx-auto grid max-w-[1180px] items-center gap-14 px-6 md:grid-cols-[0.95fr_1.05fr]">
         {/* 좌측: 메시지 */}
         <div>
@@ -23,10 +23,10 @@ export function ZeroBarrier() {
           </div>
 
           <h2
-            className="mb-5 text-h2 text-foreground md:text-[36px] font-display font-extrabold text-pretty"
+            className="mb-5 text-h2 text-foreground md:text-[36px] font-display font-extrabold text-balance break-keep"
           >
-            복잡한 셋팅 NO!{' '}
-            <span className="text-brand-500">빈 화면 NO!</span>
+            <span className="whitespace-nowrap">복잡한 셋팅 NO!</span>{' '}
+            <span className="text-brand-500 whitespace-nowrap">빈 화면 NO!</span>
           </h2>
 
           <p className="mb-3 text-h4 text-foreground font-bold">
@@ -43,7 +43,7 @@ export function ZeroBarrier() {
         </div>
 
         {/* 우측: 단계별 셋업 시각화 */}
-        <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-2">
+        <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-2 md:p-8">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-[12px] font-bold uppercase tracking-wider text-brand-700">
               단계별 셋업 위저드

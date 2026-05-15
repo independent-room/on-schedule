@@ -51,7 +51,7 @@ export function FeatureCards() {
   return (
     <section
       id="features"
-      className="bg-cream-50/40 py-20 md:py-28"
+      className="bg-cream-50/40 py-14 md:py-28"
     >
       <div className="mx-auto max-w-[1180px] px-6">
         <SectionHeading
@@ -70,7 +70,7 @@ export function FeatureCards() {
           {FEATURES.map(({ question, name, desc, badge, icon: Icon }) => (
             <article
               key={name}
-              className="group flex flex-col rounded-2xl border border-neutral-200 bg-white p-7 transition-all hover:-translate-y-0.5 hover:shadow-3"
+              className="group flex flex-col rounded-2xl border border-neutral-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:shadow-3 md:p-7"
             >
               <p className="mb-5 min-h-[3em] text-body-l text-neutral-700">
                 {question}

@@ -21,14 +21,14 @@ const POINTS = [
 
 export function ValueDeclaration() {
   return (
-    <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
+    <section className="border-y border-neutral-200 bg-white py-14 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
         <SectionHeading
           className="mb-14"
           title="온스케줄로 사장님의 든든한 운영을 돕겠습니다"
           subtitle={
             <>
-              예약 받기부터 알림톡 발송, 고객 관리까지
+              예약 받기부터 알림톡 발송, 고객 관리까지{' '}
               <br className="hidden md:block" />
               사장님 가게 운영을 전반적으로 지원합니다
             </>
@@ -39,7 +39,7 @@ export function ValueDeclaration() {
           {POINTS.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
-              className="rounded-2xl border border-neutral-200 bg-white p-7 transition-shadow hover:shadow-2"
+              className="rounded-2xl border border-neutral-200 bg-white p-5 transition-shadow hover:shadow-2 md:p-7"
             >
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-brand-700">
                 <Icon className="h-6 w-6" strokeWidth={1.75} />
