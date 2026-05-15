@@ -4,7 +4,7 @@ import { Check, MessageSquare, Calendar, Bell } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="hero-glow relative overflow-hidden bg-cream-50/40 py-20 md:py-28">
+    <section className="hero-glow relative overflow-hidden bg-cream-50/40 py-14 md:py-28">
       <div className="relative z-10 mx-auto grid max-w-[1180px] items-center gap-16 px-6 md:grid-cols-[1.05fr_0.95fr]">
         {/* 좌측: 메시지 */}
         <div>
@@ -13,7 +13,7 @@ export function Hero() {
             사전 신청 진행 중 · 선착순 100명
           </span>
 
-          <h1 className="mb-6 font-display text-[44px] font-extrabold leading-[1.13] tracking-[-0.030em] text-foreground text-balance break-keep md:text-[56px] md:leading-[1.08]">
+          <h1 className="mb-5 font-display text-[40px] font-extrabold leading-[1.18] tracking-[-0.028em] text-foreground text-balance break-keep md:mb-6 md:text-[56px] md:leading-[1.08] md:tracking-[-0.030em]">
             예약 받기, 알림 보내기,{' '}
             <span className="text-highlight">고객 관리까지</span>
             <br className="hidden md:block" /> 모두 한 곳에
@@ -23,7 +23,7 @@ export function Hero() {
             사장님이 가장 쉽게 만드는 예약 시스템
           </p>
 
-          <p className="mb-9 max-w-[480px] text-body-l text-neutral-700">
+          <p className="mb-8 max-w-[480px] text-body-l text-neutral-700">
             여기저기 흩어진 예약을 한 곳에서 관리하고
             <br />
             사장님 시간을 돌려드립니다
@@ -66,9 +66,9 @@ export function Hero() {
         </div>
 
         {/* 우측: 통합 시각화 카드 */}
-        <div className="relative justify-self-center">
-          <div className="phone-glow relative">
-            <div className="relative w-[340px] rounded-3xl border border-neutral-200 bg-white p-6 shadow-3">
+        <div className="relative w-full">
+          <div className="phone-glow relative mx-auto w-full max-w-[340px]">
+            <div className="relative w-full rounded-3xl border border-neutral-200 bg-white p-6 shadow-3">
               <div className="mb-5 flex items-center gap-3 border-b border-neutral-100 pb-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-[20px]">
                   🍞

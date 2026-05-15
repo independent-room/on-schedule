@@ -12,20 +12,20 @@ const INDUSTRIES = [
 
 export function SupportScope() {
   return (
-    <section className="border-y border-neutral-200 bg-white py-20 md:py-24">
+    <section className="border-y border-neutral-200 bg-white py-14 md:py-24">
       <div className="mx-auto max-w-[1180px] px-6">
         <SectionHeading
           className="mb-12"
           title={
             <>
-              베이커리부터 뷰티, 원데이클래스까지
+              베이커리부터 뷰티, 원데이클래스까지{' '}
               <br className="hidden md:block" />
-              <span className="text-brand-500"> 온스케줄은 모든 자영업을 지원합니다</span>
+              <span className="text-brand-500">온스케줄은 모든 자영업을 지원합니다</span>
             </>
           }
           subtitle={
             <>
-              업종 가리지 않는 범용 시스템입니다.
+              업종 가리지 않는 범용 시스템입니다.{' '}
               <br className="hidden md:block" />
               사장님 가게 특성에 맞춰 단계별로 셋팅됩니다.
             </>

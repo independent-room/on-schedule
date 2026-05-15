@@ -48,7 +48,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased">{children}</body>
+      <body className="bg-background text-foreground antialiased pb-[calc(env(safe-area-inset-bottom)+6rem)] md:pb-0">
+        {children}
+      </body>
     </html>
   );
 }

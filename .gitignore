@@ -51,6 +51,11 @@ Thumbs.db
 # Playwright MCP artifacts
 .playwright-mcp/
 
+# Local screenshot scratch (mcp playwright captures)
+/m-*.png
+/mobile-*.png
+/pc-*.png
+
 # Claude Code local settings (user-specific permissions)
 .claude/settings.local.json
 .claude/scheduled_tasks.lock

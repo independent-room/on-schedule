@@ -46,7 +46,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-cream-50/40 py-20 md:py-28">
+    <section id="faq" className="bg-cream-50/40 py-14 md:py-28">
       <div className="mx-auto max-w-[760px] px-6">
         <SectionHeading
           className="mb-12"

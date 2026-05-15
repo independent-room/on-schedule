@@ -63,7 +63,7 @@ export function FinalCta() {
     typeof status === 'object' && status.kind === 'error' ? status.message : null;
 
   return (
-    <section id="signup" className="bg-foreground py-20 text-white md:py-28">
+    <section id="signup" className="bg-foreground py-14 text-white md:py-28">
       <div className="mx-auto max-w-[680px] px-6">
         <div className="mb-10 text-center">
           <span className="mb-4 inline-block rounded-full bg-brand-500 px-3 py-1.5 text-[12px] font-bold tracking-wider text-white">
@@ -79,7 +79,7 @@ export function FinalCta() {
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-5 rounded-2xl bg-white p-7 text-foreground md:p-9"
+          className="space-y-5 rounded-2xl bg-white p-6 text-foreground md:p-9"
         >
           {/* 이메일 */}
           <div className="space-y-2">
@@ -141,7 +141,7 @@ export function FinalCta() {
           </div>
 
           {/* 동의 체크박스 */}
-          <div className="space-y-3 rounded-xl bg-cream-50/50 p-4">
+          <div className="space-y-3 rounded-xl bg-cream-50/50 p-5">
             <div className="flex items-start gap-3">
               <Checkbox
                 id="privacy"
@@ -150,12 +150,12 @@ export function FinalCta() {
                 required
                 className="mt-0.5"
               />
-              <Label htmlFor="privacy" className="text-body-s leading-relaxed cursor-pointer">
+              <Label htmlFor="privacy" className="text-body leading-relaxed cursor-pointer md:text-body-s">
                 <span className="text-destructive">[필수]</span>{' '}
                 <Link href="/privacy" className="text-brand-700 underline" target="_blank">
                   개인정보처리방침
                 </Link>
-                에 동의합니다
+                <span className="whitespace-nowrap">에 동의합니다</span>
               </Label>
             </div>
             <div className="flex items-start gap-3">
@@ -166,8 +166,9 @@ export function FinalCta() {
                 required
                 className="mt-0.5"
               />
-              <Label htmlFor="marketing" className="text-body-s leading-relaxed cursor-pointer">
-                <span className="text-destructive">[필수]</span> 출시 알림 수신에 동의합니다
+              <Label htmlFor="marketing" className="text-body leading-relaxed cursor-pointer md:text-body-s">
+                <span className="text-destructive">[필수]</span>{' '}
+                <span className="whitespace-nowrap">출시 알림 수신에 동의합니다</span>
               </Label>
             </div>
           </div>
